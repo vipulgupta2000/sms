@@ -1,0 +1,8 @@
+13-12-2014
+/lib/update.php
+added option code to now store value lists which can be reusable.
+
+/lib/addrow.php
+function update() line# 266 introduced mysql_real_escape_string() function
+function addrow() added code for the option row[type]==list.
+

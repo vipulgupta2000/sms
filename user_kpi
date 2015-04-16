@@ -1,0 +1,22 @@
+<h2>User KPI</h2>
+
+<?php
+$tbl=$_GET['page'];
+$field_show=array();
+$field_edit=array();
+
+$qual=NULL;
+$field_edit=array();
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{
+
+$field_edit=array();
+echo "<p>".display($tbl,$qual,1,$field_edit)."</p>"; 
+//display($tbl); 
+addrow($tbl);
+}
+
+?>

@@ -1,0 +1,9 @@
+<?php
+//$tbl='field';
+//$field=NULL;
+//$qual=" 1=1";
+//$a=display($tbl,$qual,1,$field);
+//echo "<input type=\"text\" name=\"vip\" value=".$a." />";
+//echo "<input type=\"submit\" name=\"ok\" value=\"ok\" />";
+include('pdfexample.php');
+?>

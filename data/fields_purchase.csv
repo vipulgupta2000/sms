@@ -1,0 +1,9 @@
+fieldid,tblid,name,alias,type,dbtype,dbindex,size
+,20,order_no,Order No.,text,varchar,primary,10
+,20,order_date,Order Date,date,varchar,,10
+,20,po_number,PO Number,text,varchar,,10
+,20,emp_name,Employee Name,text,varchar,,10
+,20,duration,Time Period,text,varchar,,10
+,20,proj_start,Project Start Date,date,varchar,,10
+,20,proj_end,Project End Date,date,varchar,,10
+,20,amount,Amount (In Rs),text,int,,10

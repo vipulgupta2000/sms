@@ -1,0 +1,23 @@
+<div id="middle_right_top">
+<h2>Puneeth</h2>
+</div>
+
+<?php
+
+$tbl=$_GET['page'];
+//$tbl='appraisal_master';
+$field_edit=array('empid','name','days','month','year','laptop_allowance','medical_reimbursement','arrear_income','on_call_allowance');
+//$field_show=array('id','empid','name','days','month','year','laptop_allowance','medical_reimbursement','arrear_income','on_call_allowance');
+$field_show=array('id','rate');
+$field_edit=array('rate');
+$qual=NULL;
+if(isset($_POST['modify']) ||  isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+echo input('tax_slab',$qual,$field_edit,$field_show);
+}else
+{
+echo display($tbl,$qual,1,$field_show);
+echo display('tax_slab',$qual,1,$field_show);
+//addrow($tbl);
+}

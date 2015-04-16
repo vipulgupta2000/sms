@@ -1,0 +1,18 @@
+fieldid,tblid,name,alias,type,dbtype,dbindex,size
+,31,empid,Employee ID,text,int,primary,10
+,31,name,Name,text,varchar,,20
+,31,pan,Pan Card,text,varchar,,20
+,31,pf_accno,PF Account No.,text,varchar,,20
+,31,emptype,Employee Type,text,varchar,,20
+,31,doj,Date Of Joining,text,date,,20
+,31,sex,Sex,text,varchar,,20
+,31,tax_slab_exemption,Tax Slab Exemption,text,int,,20
+,31,basic,Basic,text,int,,20
+,31,hra,HRA,text,int,,20
+,31,special_allowance,Special Allowance,text,int,,20
+,31,conveyance,Conveyance,text,int,,20
+,31,child_education,Child Education,text,int,,20
+,31,other,Other,text,int,,20
+,31,medical_reimbursement,Medical Reimbursement,text,int,,20
+,31,performance_linked_incentives,Performance Linked Incentives,text,int,,20
+,31,monthly_gross,Monthly Gross,text,int,,20

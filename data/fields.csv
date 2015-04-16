@@ -1,0 +1,9 @@
+fieldid,tblid,name,alias,type,dbtype,dbindex,size
+,21,id,id,text,varchar,primary,15
+,21,No.,No.,text,varchar,,15
+,21,Txn Date,Txn Date,text,varchar,,12
+,21,Description,Description,text,varchar,,60
+,21,ChequeNo.,ChequeNo.,text,varchar,,10
+,21,Cr/Dr,Cr/Dr,text,varchar,,10
+,21,Transaction Amount(INR),Transaction Amount(INR),text,int,,10
+,21,Balance(INR),Balance(INR),text,int,,10

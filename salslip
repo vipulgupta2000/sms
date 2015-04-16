@@ -1,0 +1,122 @@
+
+<div class="row">
+<div class="col-md-2"></div>
+<div class="col-md-10">
+    <select name="month">
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+		<option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+    </select> 
+	<select name="year">
+    <option value="2014">2014</option>
+    <option value="2013">2013</option>
+	<option value="2012">2012</option> 
+	<option value="2011">2011</option>
+</select> 
+<?php
+
+echo "Your are ".$_SESSION['SESS_empid'].$_SESSION['SESS_ename'] ;
+//echo "EmpID<input name=\"empid\" type=\"text\" value=\"\">";
+echo "<input class=\"btn btn-warning\" id=\"btn\" type=\"submit\" name=\"report\" value=\"report\">";
+//isset($_POST['month']) && isset($_POST['empid']))
+$empid=isset($_POST['empid'])?$_POST['empid']:'1020';
+//Get Master table details
+$sql_master="select * from master where empid=$empid";//--
+$resultm=mysql_query($sql_master) or die(mysql_error());
+$memp=array();$mfields=array();
+$sql_fields="select name,alias from field where tblid=(select tblid from config where name='master')";
+$resultf=mysql_query($sql_fields) or die(mysql_error());
+while($rowm=mysql_fetch_array($resultm))
+{
+$resultf=mysql_query($sql_fields) or die(mysql_error());
+while($rowf=mysql_fetch_array($resultf))
+{
+$mfields[$rowf['name']]=$rowm[$rowf['name']];
+}
+//$memp[$empid]=$mfields;
+$memp[$rowm['empid']]=$mfields;
+}
+//$memp['1011']=array('vipul'=>'great');
+//$memp['1011']=array_add('neha');
+var_dump($memp);
+echo $empid;
+echo $memp[$empid]['name'];
+$name=$memp[$empid]['name'];
+$emp=$memp[$empid]['emptype'];
+$doj=getmydate($memp[$empid]['doj']);
+$pf=$memp[$empid]['pf_accno'];
+$pan=$memp[$empid]['pan'];
+$mbasic=$memp[$empid]['basic'];
+$mhra=$memp[$empid]['hra'];
+$mspecial_allowance=$memp[$empid]['special_allowance'];
+$mconv=$memp[$empid]['conveyance'];
+$mchild=$memp[$empid]['child_education'];
+if(isset($_POST['report'])) 
+{
+$sql="select * from payroll where year='$_POST[year]' and month='$_POST[month]' and empid='$empid'";
+echo $sql;
+$result=mysql_query($sql) or die(mysql_error());
+while($row=mysql_fetch_array($result))
+{
+$basic=round($row['basic']);
+$hra=$row['hra'];
+$special_allowance=$row['special_allowance'];
+$mgross=$row['monthly_gross'];
+$ded=$row['monthly_deduction'];
+$netsal=$row['net_salary'];
+$conv=$row['conveyance'];
+$child=$row['child_education'];
+$mon=$row['month'];
+$itax=$row['incometax_month'];
+$pfded=$row['pf'];
+$esi=$row['esi'];
+$lwf=$row['lwf'];
+$ptax=isset($row['ptax'])?$row['ptax']:0;
+$aded=isset($row['arrear_deduction'])?$row['arrear_deduction']:0;
+$plib=$row['performance_linked_incentives'];
+$lap=$row['laptop_allowance'];
+$oca=$row['on_call_allowance'];
+$nsa=$row['night_shift'];
+$arr_inc=$row['arrear_income'];
+$yproj=$row['projected_income'];
+$med=$row['medical_reimbursement'];
+$taxable_inc=$row['taxable_income'];
+$ntax=$row['projected_incometax'];
+$hra_ex=$row['hra_exemption'];
+$conv_ex=$row['conv_exemption'];
+$ann_80c=$row['annual80c_savings'];
+$ann_80d=$row['annual80d_savings'];
+
+include('slipformat.php');
+
+}
+}
+?>
+
+</div></div>
+<?php
+$tbl='payroll';
+$qual_orig=" 1=1";
+$qual=isset($_POST['qual'])?$_POST['qual']." and ".$qual_orig:$qual_orig;
+echo "Qual:<input type=\"text\" name=\"qual\" value=\"$qual\" />";
+//$tbl='appraisal_master';
+$field_edit=array('tblid','name','alias','size','type','dbindex','dbtype');
+$field_show=array('empid','name','basic','hra','special_allowance','conveyance','child_education','performance_linked_incentives','laptop_allowance','medical_reimbursement','arrear_income','on_call_allowance','monthly_gross','monthly_deduction','net_salary');
+$qual="empid='1011'";
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+//echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{
+//echo display_array($tbl,$qual,1,$field_show);
+}
+?>

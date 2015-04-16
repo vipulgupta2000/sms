@@ -1,0 +1,34 @@
+<div id="middle_right_top">
+<h2>Master</h2>
+</div>
+
+<?php
+$tbl=$_GET['page'];
+//$qual_orig=" 1=1";
+//$qual=isset($_POST['qual'])?$_POST['qual']." and ".$qual_orig:$qual_orig;
+//echo $qual;
+$field_edit=array('id','empid','name','monthly_gross','sdate','edate','valid','ptax','lwf','status');
+$field_show=array('id','empid','name','monthly_gross','sdate','edate','valid','ptax','lwf','status');
+$qual=NULL;
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{
+echo display($tbl,$qual,1,$field_show);
+addrow($tbl);
+}
+echo "<input name=\"qual\" type=\"text\" value=\"\" />";
+?>
+<script>
+$("#name0").change(function(){
+var x=$("#name0").val();	
+//alert(x);
+$.post("http://localhost/sms/option.php?page=option.php",{
+    page:"users",
+	param:x
+  },function(data,status){
+$("#empid0").val(data);
+});
+});
+</script>

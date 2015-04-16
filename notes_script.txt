@@ -1,0 +1,35 @@
+if($("input[name='field_edit']").val())
+($("input[name='komaal']").hide();
+$("input[name='load']").hide();
+)
+<script>
+//$(":submit").click(function(){
+//$("input[name='komaal']").show();
+//if($("input:text").is(":empty")){
+//$(this.append('warning');
+//	}
+//});
+$(document).ready(function(){
+  $("td").click(function(){
+ //$(this).parent().hide();
+ //var x= $(this).parents().html();
+ //$(this).prepend("<tr>"+x+"</tr>");
+ //$("td").eq(2).css("background-color","yellow");
+  });
+
+
+  $("td").dblclick(function(){
+   //alert($(this).prevUntil("tr").last().text());
+   //alert($(this).prev('input').val());
+   $("input[name=qual]").val("empid="+$(this).prevUntil("tr").last().text());
+   document.forms["frm1"].action="home.php?page=user_appraisal";
+   $("form").attr('action','home.php?page=images');
+   $("form").submit();
+  });
+   $("td").onmouseout(function(){
+   $(this).parent().css("background-color","");
+  });
+  });
+
+
+</script>

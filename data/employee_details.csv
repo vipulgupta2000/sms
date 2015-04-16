@@ -1,0 +1,2 @@
+employee_id,name,designation,pan_card,"doj=(A2-DATE(1970,1,1))*86400",dob,name_bank,bank_name,bank_branch,acc_details,ifsc_code,salary,paid_days,comment
+1011,Allen Allbrook,Consultant,AGXPG5745P,1-Apr-11,20-Nov-80,Allen Allbrook,Axis Bank,Defence Colony New Delhi 110024,Axis- 912010004060557,UTIB0000357,,,

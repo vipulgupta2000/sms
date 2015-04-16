@@ -1,0 +1,20 @@
+<?php
+echo "<ul>";
+echo "Upload File";
+echo "<li><a class=\"menu_left\" href=\"home.php?page=excelimport.php\" >upload</a></li>";
+echo "</ul>";
+?>
+<p>
+Month:<input type="text" name="month" /> 
+Year:<input type="text" name="year" />
+</p>
+<span></span>
+<script>
+i=0;
+$(document).ready(function(){
+  $("input[name='month']").keyup(function(){
+  str=$(this).val();
+  $("span").text(str);
+	});
+});
+</script>

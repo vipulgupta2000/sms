@@ -1,0 +1,77 @@
+<div id="middle_right_top">
+<h2>Enter Time Sheet</h2>
+</div>
+
+<?php
+$tbl=$_GET['page'];
+//var_dump(tbldef('field'));
+$qual_orig=" 1=1";
+$qual=isset($_POST['qual'])?$_POST['qual']." and ".$qual_orig:$qual_orig;
+echo "Qual:<input type=\"text\" name=\"qual\" value=\"$qual\" />";
+//$tbl='appraisal_master';
+$field_edit=array('tblid','name','alias','size','type','dbindex','dbtype');
+$field_show=array();
+//$qual=NULL;
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{
+echo display($tbl,$qual,1,$field_show);
+addrow($tbl);
+}
+/*
+function flow($tbl)
+{
+$sql_conf="select tblid from config where name='$tbl'";
+$result=mysql_query($sql_conf);
+$myvar=mysql_result($result,0);
+$sql_wkfl="select * from workflow where tblid='$myvar'";
+$result=mysql_query($sql_wkfl);
+while($row=mysql_fetch_array($result))
+{
+$wkflid=$row['id'];
+$sql_action="select * from action where wkflid=$wkflid order by seq";
+$result_act=mysql_query($sql_action);
+	while($row_act=mysql_fetch_array($result_act))
+	{
+	$condition=$row_act['qual'];
+	if($condition)
+	{
+	{
+	$sql_map="select * from action_map where actionid='$row_act[id]'";
+	$result_map=mysql_query($sql_map);
+	while($row_act=mysql_fetch_array($result_act))
+		{	
+		$fname=$fname.$row_act['cfieldid']."=".$row_act['sfieldid'].",";
+		}
+	
+	}
+}
+
+}
+*/
+getfieldname(23);
+var_dump(tblarray('payroll','1=1'));
+function getfieldname($tblid)
+{
+$memp=array();$mfields=array();
+$sql_fields="select fieldid,tblid,name,alias,type from field where tblid=$tblid";
+echo $sql_fields;
+$resultf=mysql_query($sql_fields) or die("from here".mysql_error());
+while($rowf=mysql_fetch_array($resultf))
+{
+$mfields[$rowf['fieldid']]=$rowf['name'];
+//$mfields[$rowf['alias']]=$rowf['name'];
+//$mfields[$rowf['name'].'type']=$rowf['type'];
+//$mfields[$rowf['name'].'fieldid']=$rowf['fieldid'];
+//$mfields[$rowf['name'].'tblid']=$rowf['tblid'];
+}
+//$memp[$empid]=$mfields;
+
+//$memp['1011']=array('vipul'=>'great');
+//$memp['1011']=array_add('neha');
+var_dump($mfields);
+//return $mfields;
+}
+?>

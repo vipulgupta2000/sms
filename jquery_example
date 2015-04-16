@@ -1,0 +1,110 @@
+<div id="middle_right_top">
+<h2>Enter Jquery</h2>
+</div>
+<button>Get External Content</button>
+<div id="div1">Hello how are you</div>
+<?php
+
+$tbl=$_GET['page'];
+//$tbl='appraisal_master';
+$field_edit=array('id','name','source','filter','value','alias');
+$field_show=array();
+$qual=NULL;
+
+/*if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{
+$k=display($tbl,$qual,1,$field_show);
+echo $k;
+addrow($tbl);
+}
+*/
+
+
+?>
+<script>
+$("button").click(function(){
+  $.get("jquery_2",function(data,status){
+        $("#div1").html("External content loaded successfully!"+data+status+"ok");
+  
+  });
+});
+
+$(this).bind("keydown", function (event) {
+        // Allow: backspace, delete
+        if (event.keyCode == 46 || event.keyCode == 8) 
+        {
+            alert("backspace pressed");
+			var tempField = $(this).attr('name');
+            var hiddenID = tempField.substr(tempField.indexOf('_') + 1);
+            $('#' + hiddenID).val('');
+            $(this).val('')
+            return;
+			
+        }  // Allow: tab, escape, and enter
+        else if (event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 ||
+        // Allow: Ctrl+A
+        (event.keyCode == 65 && event.ctrlKey === true) ||
+        // Allow: home, end, left, right
+        (event.keyCode >= 35 && event.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        else 
+        {
+            // Ensure that it is a number and stop the keypress
+            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) &&       (event.keyCode < 96 || event.keyCode > 105)) 
+            {
+                event.preventDefault();
+            }
+        }
+    });
+</script>
+
+
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+	
+
+<style>
+#toggle {
+width: 100px;
+height: 100px;
+background: #ccc;
+}
+</style>
+<p>Click anywhere to toggle the box.</p>
+<div id="toggle"></div>
+<script>
+$( document ).click(function() {
+$( "#toggle" ).toggle( "explode" );
+});
+</script>

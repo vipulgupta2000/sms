@@ -1,0 +1,158 @@
+<h2>Appraisal Rating</h2>
+
+<?php
+$tbl=$_GET['page'];
+$field_show=array();
+$field_edit=array();	
+$qual=" empid='$_SESSION[SESS_empid]'";
+$sql_up=NULL;
+
+if(isset($_POST['tmp1']))
+{$qual=" empid='".$_POST['tmp1']."'";
+//echo "<input type=\"hidden\" name=\"tmp1\" value=\"".$_POST['tmp1']."\" >";
+$_SESSION['SESS_tmp']=$_POST['tmp1'];
+}
+
+if(isset($_SESSION['SESS_tmp']))
+$qual=" empid='$_SESSION[SESS_tmp]'";
+//mail functionality start
+		$subj = " Appraisal is waiting for your action";
+		$headers = 'From: noreply@inputzero.com';
+		$txt_s = "Hi ";
+		$txt_e = ","."\n"."\n"." Appraisal is now in ";
+		$txt_et=". Your action is required.\n"."This is a system generated mail.\n\n Thanks,\nIZ001 Server.";
+		$sqlq="select empid,empname,email_id,mgremail,mgrname from user_details where status='active'"."and".$qual;
+		$result_sqlq=mysql_query($sqlq);
+		$txt=NULL;
+			
+//mail functionality end		
+if(isset($_POST['review']))
+{$sql_up="update appraisal_rating set status='Review' where ar_id='$_POST[ar_id]'";
+while($datasql=mysql_fetch_array($result_sqlq))
+		{$txt_s=$txt_s.$datasql['mgrname'].$txt_e;
+		$subj=$datasql['mgrname'].$subj;
+		$to=$datasql['mgremail'];
+		}
+$txt=$txt_s." Review".$txt_et;
+}
+if(isset($_POST['rated']))
+{$sql_up="update appraisal_rating set status='Rated' where ar_id='$_POST[ar_id]'";
+while($datasql=mysql_fetch_array($result_sqlq))
+		{$txt_s=$txt_s.$datasql['empname'].$txt_e;
+		$subj=$datasql['empname'].$subj;
+		$to=$datasql['email_id'];
+		}
+$txt=$txt_s." Rated".$txt_et;	
+}
+if(isset($_POST['accepted']))
+{$sql_up="update appraisal_rating set status='Accepted' where ar_id='$_POST[ar_id]'";
+while($datasql=mysql_fetch_array($result_sqlq))
+		{$txt_s=$txt_s.$datasql['mgrname'].$txt_e;
+		$subj=$datasql['mgrname'].$subj;
+		$to=$datasql['mgremail'];
+		}
+		$txt=$txt_s." Accepted".$txt_et;
+}
+if(isset($_POST['closed']))
+{$sql_up="update appraisal_rating set status='Closed' where ar_id='$_POST[ar_id]'";
+$txt=$txt_s." Review".$txt_et;		
+while($datasql=mysql_fetch_array($result_sqlq))
+		{$txt_s=$txt_s.$datasql['empname'].$txt_e;
+		$subj=$datasql['empname'].$subj;
+		$to=$datasql['email_id'];
+		}
+$txt=$txt_s." Closed".$txt_et;
+}
+if(isset($sql_up))
+{mysql_query($sql_up);
+// Send email
+$txt = wordwrap($txt,100);
+//echo $txt;
+//$to="vipul.gupta@inputzero.com";
+$true = mail($to, $subj, $txt, $headers);
+if($true==1)
+{
+echo "Notification Mail Sent";
+}
+else {echo "Unable to Send Notification Mail";}
+}
+
+$bt=array("Open","Review","Rated","Accepted","Closed");
+$btp=array("btn-info","btn-warning","btn-danger","btn-primary","btn-success");
+echo "<div class=\"btn-group\">";
+for($i=0;$i<count($bt);$i++)
+{
+$hd="<button type=\"button\" class=\"btn btn-default btn-lg ".$btp[$i]."\">";
+$tl="<span class=\"glyphicon glyphicon-chevron-right\"></span></button>";
+echo $hd.$bt[$i].$tl;
+}
+echo "</div>";
+
+$data_sql="select status from appraisal_rating where".$qual;
+$result_data=mysql_query($data_sql);
+if (!$result_data) {
+    die('Could not query:' . mysql_error());
+}
+$status=(mysql_result($result_data,0));
+//echo $status;
+echo "<p>".display('user_details',$qual,1,$field_show)."</p>";
+$field_show=array('status','rating','comments');
+echo "<p>".display('user_rating',$qual,1,$field_show)."</p>";
+$qual_new=" ap_status='Active'";
+$field_am=array('ap_type','ap_status','ap_from','ap_todate');
+//$field_show=array();
+echo "<p>".display('appraisal_master',$qual_new,1,$field_am)."</p>";
+echo "<div id=\"bar\"></div>";
+echo "<div class=\"alert alert-success\"><ul class=\"list-inline\"><li>1:Outstanding and Consistantly surpasses expectation</li><li>2:Good and Occasionally surpasses expectation</li><li>3:Average and Meets Expectation</li><li>4:Poor and Needs Improvement</li><li><span class=\"text-danger\">5:Very Poor and Warning</span></li></ul></div>";
+?>
+<script>
+if(document.getElementById("user_rating").rows[1].cells[0].innerHTML=="Open")
+var x="<div class=\"progress\"><div class=\"progress-bar progress-bar-info\" style=\"width\: "+20+"\%\" ><h7>Open</h7></div></div>";
+if(document.getElementById("user_rating").rows[1].cells[0].innerHTML=="Review")
+var x="<div class=\"progress\"><div class=\"progress-bar progress-bar-warning\" style=\"width\: "+40+"\%\" ><h7>Review</h7></div></div>";
+if(document.getElementById("user_rating").rows[1].cells[0].innerHTML=="Rated")
+var x="<div class=\"progress\"><div class=\"progress-bar progress-bar-danger\" style=\"width\: "+60+"\%\" ><h7>Rated</h7></div></div>";
+if(document.getElementById("user_rating").rows[1].cells[0].innerHTML=="Accepted")
+var x="<div class=\"progress\"><div class=\"progress-bar progress-bar-primary\" style=\"width\: "+80+"\%\" ><h7>Accepted</h7></div></div>";
+if(document.getElementById("user_rating").rows[1].cells[0].innerHTML=="Closed")
+var x="<div class=\"progress\"><div class=\"progress-bar progress-bar-success\" style=\"width\: "+100+"\%\" ><h7>Closed</h7></div></div>";
+document.getElementById("bar").innerHTML=x;
+</script>
+<?php
+$field_show=array();
+$blnk="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+$alrt_s="<div class=\"alert alert-warning\">";
+$alrt_e="</div>";
+$msg="Please ensure you have Updated before Submitting";
+if(($status=="Open") && ($_SESSION['SESS_access']=='user' || $_SESSION['SESS_tmp']==$_SESSION['SESS_empid']))
+{
+$field_edit=array('comments','self_rating');
+echo input($tbl,$qual,$field_edit,$field_show);
+echo $blnk;
+$msg=$msg."<input class=\"btn btn-primary\" id=\"btn1\" type=\"submit\" name=\"review\" value=\"Submit for review\">";
+}elseif(($status=="Review") && ($_SESSION['SESS_access']=='admin' || $_SESSION['SESS_access']=='manager') && !($_SESSION['SESS_tmp']==$_SESSION['SESS_empid']) )
+{
+$field_edit=array('comments','mgr_rating');
+echo input($tbl,$qual,$field_edit,$field_show);
+echo $blnk;
+$msg=$msg."<input class=\"btn btn-primary\" id=\"btn1\" type=\"submit\" name=\"rated\" value=\"Submit for rating\">";
+}elseif(($status=="Rated") && ($_SESSION['SESS_access']=='user' or $_SESSION['SESS_tmp']==$_SESSION['SESS_empid']))
+{$field_edit=array('comments');
+echo input($tbl,$qual,$field_edit,$field_show);
+echo $blnk;
+$msg=$msg."<input class=\"btn btn-primary\" id=\"btn1\" type=\"submit\" name=\"accepted\" value=\"Submit for accept\">";
+}elseif(($status=="Accepted") && ($_SESSION['SESS_access']=='admin' || $_SESSION['SESS_access']=='manager')&& !($_SESSION['SESS_tmp']==$_SESSION['SESS_empid']))
+{$field_edit=array('comments');
+echo input($tbl,$qual,$field_edit,$field_show);
+echo $blnk;
+$msg=$msg."<input class=\"btn btn-primary\" id=\"btn1\" type=\"submit\" name=\"closed\" value=\"Submit for close\">";
+}
+else
+{$field_edit=array();
+echo display($tbl,$qual,1,$field_show);
+$msg=NULL;
+}
+if(isset($msg))
+$msg=$alrt_s.$msg.$alrt_e;
+echo $msg;
+?>

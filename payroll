@@ -1,0 +1,24 @@
+<div id="middle_right_top">
+<h2>Payroll</h2>
+</div>
+<div class="col-md-2 col-xs-12 column well">
+</div>
+<div class="col-md-10">
+<?php
+$tbl=$_GET['page'];
+//$tbl='appraisal_master';
+$field_edit=array('empid','name','days','month','year','laptop_allowance','medical_reimbursement','arrear_income','on_call_allowance');
+//$field_show=array('id','empid','name','days','month','year','laptop_allowance','medical_reimbursement','arrear_income','on_call_allowance');
+$field_show=array();
+$qual=NULL;
+if(isset($_POST['modify']) ||  isset($_POST['update']))
+{
+$qual=" id=5";
+echo input_new($tbl,$qual,$field_edit,$field_show,2);
+}else
+{
+echo display($tbl,$qual,1,$field_show);
+addrow($tbl);
+}
+?>
+</div>

@@ -1,0 +1,100 @@
+ 
+<?php
+$month=isset($_POST['month'])?$_POST['month']:4;
+?>
+ <select name="month">
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+		<option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+    </select> 
+	<select name="year">
+    <option value="2014">2014</option>
+    <option value="2013">2013</option>
+	<option value="2012">2012</option> 
+	<option value="2011">2011</option>
+</select> 
+<?php
+$tbl=$_GET['page'];
+$tbl='master';
+$field_edit=array('empid','name','days','lwf','laptop_allowance','med_reimbursement','arrear_income','on_call_allowance','arrear_deduction','night_shift');
+$field_defaults=array('days'=>30,'month'=>4,'year'=>2014);
+$field_show=array('empid','name',array('days','30'),'lwf','laptop_allowance','med_reimbursement','arrear_income','on_call_allowance','arrear_deduction','night_shift');
+if(isset($_POST['month']))
+{
+$sdate="01-".$_POST['month']."-".$_POST['year'];
+$sdate=setmydate($sdate);
+$qual=" $sdate between sdate and edate";
+echo "you are running payroll for the month of  ".$_POST['month']." and year ".$_POST['year'];
+}
+else
+$qual=NULL;
+if(isset($_POST['open']))
+{
+//insert_data($tbl);
+
+$year=2014;
+
+$mdays=cal_days_in_month(CAL_GREGORIAN, $month, $year);
+//header("location:home.php?page=dashboard");
+validrun($_POST['month'],$_POST['year']);
+//openpayroll($_POST['month'],$_POST['year']);
+}
+//echo input('payroll',$qual,$field_edit,$field_show);
+//echo input('master',$qual,$field_edit,$field_show,$field_defaults);
+echo " Please choose Month and Year ";
+//echo "you are running payroll for the month of  ".$month." and year ".$year;
+echo input('master',$qual,$field_edit,$field_show);
+
+echo "<center><br><input class=\"btn-success\" name=\"open\" type=\"submit\" value=\"OpenPayroll\"></br></center>";
+?>
+<a href="#" tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover1" data-trigger="focus" title="Dismissible popover" >Dismissible popover</a>
+<div id="div1"  data-toggle="popover" ></div>
+
+
+</div><script type="text/javascript" >
+document.forms["frm1"].month.onchange= function(){
+            var j = document.getElementById("master").rows.length-1; 
+			var y=document.forms["frm1"].year.value;
+			var m=document.forms["frm1"].month.value;
+			for(i=0;i<j;i++) { 
+			var z=document.forms["frm1"].elements["days"+i].value=new Date(y,m,0).getDate(); 
+			}
+			 document.forms["frm1"].submit();
+			 }	
+			  </script>
+<script>			  
+$("#name0").change(function(){
+var x=$("#name0").val();
+//$("input[name='laptop_allowance0']").val(x);
+$.post("http://localhost/sms/option.php?page=option.php",{
+    page:"users",
+	param:x
+  },function(data,status){
+//alert(data+status);
+  //$("input[name='lwf0']").append(data);
+//$("#name0").parent().next().html(data);
+$("#div1").html(data);
+//$("#myModal").modal() // initialized with defaults
+//$("#myModal").modal({ keyboard: false }) // initialized with no keyboard
+//$("#myModal").modal('show') // initializes and invokes show immediately
+ // $('.btn').popover({html:true,content:data});
+ //$('[data-toggle="popover1"]').popover('show');
+ //var mywin=window.open("", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=50, width=400, height=400");
+//mywin.document.write(data);
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus();
+  });
+
+});
+});
+
+</script>

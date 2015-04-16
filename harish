@@ -1,0 +1,24 @@
+<div id="middle_right_top">
+<h2>Harish</h2>
+</div>
+
+<?php
+$tbl=$_GET['page'];
+//$qual_orig=" 1=1";
+//$qual=isset($_POST['qual'])?$_POST['qual']." and ".$qual_orig:$qual_orig;
+//echo $qual;
+$field_edit=array('id','name','status');
+$field_show=array('id','empid','name','status');
+//$field_show=NULL;
+//$qual=" empid='1012'";
+$qual=NULL;
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{
+echo display($tbl,$qual,1,$field_show);
+addrow($tbl);
+}
+//echo "<input name=\"qual\" type=\"text\" value=\"\" />";
+?>

@@ -1,0 +1,20 @@
+fieldid,tblid,name,alias,type,dbtype,dbindex,size
+,21,inv_no,Invoice no,text,varchar,primary,15
+,21,bill_period,Bill Period,text,varchar,,30
+,21,bill_to,Billed To,text,varchar,,50
+,21,bill_date,Bill Date,text,int,,10
+,21,gross_total,Gross Total,text,int,,10
+,21,charges,Consulting Charges,text,int,,10
+,21,service_tax,Service Tax@12%,text,int,,10
+,21,edu_cess,Edu Cess,text,int,,10
+,21,hedu_cess,H Edu Cess,text,int,,10
+,21,po_num,Exchange Rate/PO,text,varchar,,20
+,21,employee,For,text,varchar,,50
+,21,phy_sent,Physical Copy Send,text,int,,10
+,21,soft_sent,Soft Copy Send,text,int,,10
+,21,date_amt_recvd,Date of Amt Received,text,int,,10
+,21,amt_recvd,Amount Received,text,int,,10
+,21,tds,TDS Deducted,text,int,,10
+,21,Total,Total,text,int,,10
+,21,amt_pending,Amount Pending,text,int,,10
+,21,due_date,Due Date,text,int,,10

@@ -1,0 +1,77 @@
+<div id="middle_right_top">
+<h2>Enter KPIs</h2>
+</div>
+
+<?php
+$tbl=$_GET['page'];
+$field_edit=array('kpi_description');
+$field_show=array();
+$qual=NULL;
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{$qual=NULL;
+echo display($tbl,$qual,1,$field_show); 
+addrow($tbl);
+}
+
+//mail Triggers
+if(isset($_POST['notify']))
+{
+//$sqlm="select ar.ap_id,ar.empid,ar.status,ud.mgrid,ud.empname,ud.email_id,ud.mgremail from appraisal_rating ar, user_details ud where ar.empid=ud.empid";
+$sqlm="select ar.ap_id,ar.empid,ar.status,ud.mgrid,ud.empname,ud.email_id,ud.mgremail from appraisal_rating ar,user_details ud,appraisal_master am where ar.empid=ud.empid and am.ap_id=ar.ap_id and am.ap_status='Active'";
+$result_sqlm=mysql_query($sqlm);
+while($datasql=mysql_fetch_array($result_sqlm))
+		$subj = " Appraisal is Open for your action";
+		$headers = 'From: noreply@inputzero.com';
+		$txt_s = "Hi ";
+		$txt_e = ","."\n"."\n"."Your appraisal is now Open.\n"."This is a system generated mail.Please logon to intranet and goto ams.\n\n Thanks,\nIZ001 Server.";
+		$txt=$txt_s.$datasql['empname'].$txt_e;
+	$txt = wordwrap($txt,100);
+	$subj=$datasql['empname'].$subj.$datasql['email_id'];
+	$to=$datasql['email_id'];
+	//$to='vipul.gupta@inputzero.com';
+	// Send email
+			$true = mail($to, $subj, $txt, $headers);
+			if($true==1)
+			{
+			echo "Notification Mail Sent";
+			}
+		else {echo "Unable to Send Notification Mail";}
+}
+//mail Triggers end
+
+if(isset($_POST['assign']))
+{
+$data_sql="select kpi_id from kpi_master km,appraisal_master am where km.ap_id=am.ap_id and am.ap_status='Active'";
+$sqlq="select empid,empname,email_id,mgremail from user_details where status='active'";
+echo $data_sql;
+$result_sqlq=mysql_query($sqlq);
+		$subj = " Appraisal is Open for your action";
+		$headers = 'From: noreply@inputzero.com';
+		$txt_s = "Hi ";
+		$txt_e = ","."\n"."\n"."Your appraisal is now Open.\n"."This is a system generated mail.Please logon to intranet and goto ams.\n\n Thanks,\nIZ001 Server.";
+		
+while($datasql=mysql_fetch_array($result_sqlq))
+{
+$result_data=mysql_query($data_sql);
+while($datarow=mysql_fetch_array($result_data))
+{
+$sqli="insert into user_kpi(ap_id,empid,kpi_id) values(1,'$datasql[empid]',$datarow[kpi_id])";
+if(isset($sqli) && !mysql_query($sqli))
+	{
+	die.mysql_error();
+	}
+}
+$sqli_ar="insert into appraisal_rating(ap_id,empid,status) values(1,'$datasql[empid]','Open')";
+if(isset($sqli) && !mysql_query($sqli_ar))
+	{
+	die.mysql_error();
+	}
+}
+}
+echo "<br /><br /><input class=\"btn btn-primary\" id=\"btn\" type=\"submit\" name=\"assign\" value=\"Submit for assign\">";
+echo "<br /><br /><input class=\"btn btn-success\" id=\"btn1\" type=\"submit\" name=\"notify\" value=\"Submit for Notify\">";
+	
+?>

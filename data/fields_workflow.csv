@@ -1,0 +1,8 @@
+fieldid,tblid,name,alias,type,dbtype,dbindex,size
+,4,id,id,text,int,primary,10
+,4,name,name,text,varchar,,100
+,4,type,type,text,int,,1
+,4,tblid,tblid,text,int,,10
+,4,order,order,text,int,,3
+,4,fieldname,fieldname,text,int,,10
+,4,qual,qual,text,varchar,,255
