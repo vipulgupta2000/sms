@@ -10,9 +10,10 @@ if(isset($_POST['modify']) || isset($_POST['update']))
 {
 echo input($tbl,$qual,$field_edit,$field_show);
 }else
-    //this is a else block
 {$qual=NULL;
 echo display('appraisal_master',$qual,1,$field_show);
 addrow($tbl);
 }
+
+echo "ok";
 ?>
