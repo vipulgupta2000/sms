@@ -14,4 +14,7 @@ echo input($tbl,$qual,$field_edit,$field_show);
 echo display('appraisal_master',$qual,1,$field_show);
 addrow($tbl);
 }
+
+
+echo "123";
 ?>
