@@ -13,7 +13,7 @@ $field_show=array();
 $qual=NULL;
 if(isset($_POST['modify']) ||  isset($_POST['update']))
 {
-$qual=" id=5";
+//$qual=" id=5";
 echo input_new($tbl,$qual,$field_edit,$field_show,2);
 }else
 {

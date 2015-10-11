@@ -16,7 +16,7 @@ $qual=NULL;
 if(isset($_POST['modify']) || isset($_POST['update']))
 {
 $qual=" employee_id='1011'";
-echo input_new($tbl,$qual,$field_edit,$field_show,2);
+echo input_new($tbl,$qual,$field_edit,$field_show,0);
 }else
 {
 echo display($tbl,$qual,1,$field_show);

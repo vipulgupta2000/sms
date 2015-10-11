@@ -23,6 +23,13 @@
             element2.type = "text";
             element2.name = "txtbox[]";
             cell3.appendChild(element2);
+            
+            var cell4 = row.insertCell(3);
+            var element3 = document.createElement("Textarea");
+            element3.name = "txtbox";
+            //element3.rows = "2";
+            //element3.cols="50";
+            cell4.appendChild(element3);
 
 
         }
@@ -57,21 +64,22 @@
     <INPUT type="button" value="Delete Row" onClick="deleteRow('dataTable')" />
  <form action="" method="post">
  <?php $i= 1; ?>
-    <TABLE id="dataTable" width="350px" border="1">
+    <TABLE id="dataTable" width="450px" border="1">
         <TR>
             <TD><INPUT type="checkbox" name="chk"/></TD>
             <TD> 1 </TD>
-            <TD> <INPUT type="text" name="harsh"/> </TD>
+            <TD> <INPUT type="text" name="harsh" value="harsh" /> </TD>
+            <td><TEXTAREA>This is blank</TEXTAREA></td>
         </TR>
     </TABLE>
     <input name="saveNewSales" type="submit" value="Save" id="button2" style="text-align:center"/>
  </form>
  <?php
 
-foreach($_POST as $name => $content) { // Most people refer to $key => $value
+/*foreach($_POST as $name => $content) { // Most people refer to $key => $value
    echo "The HTML name: $name <br>";
    echo "The content of it: $content <br>";
-}
+}*/
 ?>
 
 </BODY>
