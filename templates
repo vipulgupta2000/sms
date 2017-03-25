@@ -1,0 +1,75 @@
+<div id="middle_right_top">
+<h2>Appraisal Templates</h2>
+</div>
+<?php
+
+$tbl=$_GET['page'];
+$qual_orig=" 1=1";
+$qual=isset($_POST['qual'])?$_POST['qual']." and ".$qual_orig:$qual_orig;
+echo "<a href=\"home.php?page=$tbl\">Show All</a><br /><br />";
+echo "Qual:<input type=\"text\" name=\"qual\" value=\"$qual\" />";
+//$tbl='appraisal_master';
+$field_edit=array('id','tname','content');
+$field_show=array('id','tname');
+$field_show1=array();
+$field_edit1=array('id','tname');
+
+$sel=isset($_POST['sel'])?$_POST['sel']:" 1=1";
+$act=isset($_POST['act'])?$_POST['act']:'display';
+$prev=isset($_POST['prev'])?$_POST['prev']:'';
+echo "<input type=\"text\" name=\"sel\" value=\"$sel\" />";
+
+echo "<input type=\"text\" name=\"prev\" value=\"$prev\" />";
+echo "<div class=\"row clearfix\">&nbsp;</div>";
+
+if (get_magic_quotes_gpc()) $_POST = array_map('stripslashes', $_POST);
+$message = isset($_POST['message']) ? mysql_real_escape_string(stripslashes(addslashes($_POST["message"]))): 'Message';
+$message_filter=cleanup($message);
+
+$frmcode=''.
+'<div class="col-md-1"></div><div class="col-md-8">'.
+'<label for="id">ID</label><input type="text" readonly '
+        . 'class="form-control" name="id" size="9" value="">'
+        . '<br />'.
+'<label for="name">TemplateName</label>.
+<input type="text" class="form-control" name="name" size="50" value="">'.
+"<br />".
+"".
+"<label for=\"name\">Content</label><textarea class=\"form-control\" "
+. "id=\"message\" name=\"message\" rows=\"15\" cols=\"80\">enter</textarea>".
+"<br />".
+"<input class=\"btn btn-primary\" name=\"submit\" type=\"submit\" value=\"Submit\" />".
+"</div>";
+
+if ($act=='click' ) {	
+	
+echo input_new($tbl,$sel,$field_edit,$field_show1,2); 
+//echo $frmcode; 
+$act="modify";
+}elseif (isset($_POST['updates'])) {  
+echo input_new($tbl,$sel,$field_edit,$field_show1,2);    
+}elseif(isset($_POST['new'])){   
+addrow1($tbl,$field_edit,$field_show1,3);
+}
+elseif(isset($_POST['modify']))
+{
+echo "this modify";
+echo input($tbl,$qual,$field_edit1,$field_show);
+}elseif(isset($_POST['submit']))
+{
+echo "this submit";
+$time=time();
+
+$sql="insert into $tbl (name,content) values('$_POST[name]','$message')";
+
+if(!$result=mysql_query($sql))
+{ die(mysql_error());
+}
+}else{
+echo "<br /><button class=\"btn btn-danger\" type=\"submit\" name=\"new\" value=\"new\" />New</button>";
+
+echo display($tbl,$qual,1,$field_show);
+}
+
+echo "<input type=\"hidden\" name=\"act\" value=\"$act\" />";
+?>

@@ -1,0 +1,26 @@
+<?php 
+if($_SESSION['SESS_perm']=='admin' || $_SESSION['SESS_perm']=='sys_admin'){
+?>
+<div id="middle_right_top">
+<h2>Account Details</h2>
+</div>
+
+<?php
+$tbl=$_GET['page'];
+$qual_orig=" 1=1";
+$qual=isset($_POST['qual'])?$_POST['qual']." and ".$qual_orig:$qual_orig;
+echo "Qual:<input type=\"text\" name=\"qual\" value=\"$qual\" />";
+$field_edit=array();
+$field_show=array();
+
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo display_total($tbl,$qual,1,$field_show);
+}else
+{
+echo display_total($tbl,$qual,1,$field_show);
+//addrow($tbl);
+}
+}
+else{echo "<h3><center>Sorry You don't have Admin Access</center></h3>";}
+?>

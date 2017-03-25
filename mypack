@@ -1,0 +1,74 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+//createpage();
+ $sel=isset($_POST['sel'])?$_POST['sel']:$_SESSION['SESS_empid'];
+if($_SESSION['SESS_perm']=='admin' or $_SESSION['SESS_perm']=='sys_admin')
+{
+
+   
+    echo "<input type=\"text\" name=\"sel\" value=\"$sel\" />";
+}
+$sql="select tname from releaseoffer where empid=$sel and enable=0";
+if(!$result=mysql_query($sql))
+{
+die(mysql_error());
+    exit;
+}
+if(mysql_num_rows($result)==0)
+{
+    echo "<h3>You do not have a Appraisal/Revision letter to be released. "
+    . "<br />Mail to hr@inputzero.com for any queries<h3>";
+}else
+{    
+$templat=mysql_result($result,0);
+$sql="Select content from templates where tname='$templat'";
+$result=mysql_query($sql);
+$a='';
+while($row=mysql_fetch_array($result))
+{        $a=$row['content'];
+}
+//$string = ereg_replace("\{{2}.*\}{2}", $_SESSION['SESS_ename'], $a); 
+preg_match_all("(\{{2}.*\}{2})", $a, $str,PREG_PATTERN_ORDER);
+//var_dump($str);
+/*$string[0]=str_replace("{{","",$string[0]);
+$string[0]=str_replace("}}","",$string[0]);
+$var=htmlentities($string[0]);
+$vr=explode(".",$var);
+$cdd="select $vr[1] from $vr[0] where empid='$_SESSION[SESS_empid]'";
+echo $cdd;
+$result=mysql_query($cdd) or die(mysql_error());
+while ($row = mysql_fetch_array($result)) {
+   echo $row[$vr[1]];
+}
+*/
+$b=array();
+foreach($str as $string)
+{
+foreach($string as $spr)
+{
+//echo "i is ".$spr;
+$sr=str_replace("{{","",$spr);
+$sr=str_replace("}}","",$sr);
+$var=htmlentities($sr);
+$vr=explode(".",$sr);
+$cdd="select $vr[1] from $vr[0] where empid='$sel' and valid=0";
+//echo $cdd;
+$result=mysql_query($cdd) or die(mysql_error());
+while ($row = mysql_fetch_array($result)) {
+ $a= str_replace($spr,$row[$vr[1]],$a);
+//echo $row[$vr[1]];
+
+}
+}
+}
+//var_dump($b);
+echo $a;
+}
+?>
+	<script language="javascript" type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
+	<script language="javascript" type="text/javascript" src="js/tinymce/custom.js"></script>

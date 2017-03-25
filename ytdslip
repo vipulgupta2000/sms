@@ -1,0 +1,64 @@
+<?php
+echo "EmpID<input name=\"empid\" type=\"text\" value=\"\">";
+echo "<input class=\"btn btn-warning\" id=\"btn\" type=\"submit\" name=\"report\" value=\"report\">";
+$empid=isset($_POST['empid'])?$_POST['empid']:'1020';
+$payr = array();
+$payr=ytd('2013');
+
+$tg_top="<table width=auto border=1 cellpadding=2 cellspacing=2>";
+	$tg_hdr="<th>";
+	$tg_hdr_cl="</th>";
+	$tg_ro="<tr>";
+	$tg_ro_cl="</tr>";
+	$tg_td="<td>";
+	$tg_td_cl="</td>";
+	$tg_top_cl="</table>";
+
+if(isset($_POST['report'])) 
+{
+$field_show=array('month','basic','hra','special_allowance','conveyance','child_education','on_call_allowance','night_shift','arrear_income');
+$qual=" empid=$empid";
+//$qual="1=1";
+//echo display('payroll',$qual,1,$field_show);
+$memp=array();
+$memp=tblarray('payroll',$qual); 
+//echo $memp[$empid]['name'];
+//var_dump($memp);
+//echo sizeof($memp[$empid]);
+//if(in_array($field_show,$a))
+$tot_col=array_fill(0,sizeof($field_show),0);$tot=0;
+echo $tg_top;
+//for($j=0;$j<=sizeof($memp)+1;$j++)
+$j=0;$a='';$b='';
+foreach($memp as $k=>$v)
+{echo $tg_ro;$tot_row=0;
+for($i=0;$i<sizeof($field_show);$i++)
+{
+if($j==0)
+{
+$a=$tg_hdr.$field_show[$i].$tg_hdr_cl;
+echo $a;
+}
+$b=$b.$tg_td.$memp[$k][$field_show[$i]].$tg_td_cl;
+if($i>0)
+{$tot_col[$i]= $tot_col[$i]+$memp[$k][$field_show[$i]];
+$tot_row+=$memp[$k][$field_show[$i]];
+}	
+//$a=$tg_hdr.$tot_col[$i].$tg_hdr_cl;
+
+}
+//total of sub row
+echo $tg_ro_cl.$tg_ro.$b.$tg_td.$tot_row.$tg_td_cl;$b='';
+echo $tg_ro_cl;
+$j++;
+}
+echo $tg_ro;
+for($i=0;$i<sizeof($field_show);$i++)
+{echo $tg_hdr.$tot_col[$i].$tg_hdr_cl;$tot+=$tot_col[$i];}
+echo $tg_hdr.$tot.$tg_hdr_cl;
+echo $tg_ro_cl;
+echo $tg_top_cl;
+echo "j is ".$j;
+}
+
+?>

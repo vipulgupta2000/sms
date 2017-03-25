@@ -49,6 +49,11 @@ return $memp;
 
 function ytd($year)
 {
+    $yr2=$year;
+if($month>3)
+$off=12-$month+3;
+else
+{$off=3-$month;$yr2=$year-1;}
 $sql_pay="select empid,sum(monthly_gross) ytdgross,sum(incometax_month) ytdtax,sum(pf) ytdpf,sum(esi) ytdesi from payroll where year=$year group by empid";
 echo $sql_pay;
 $result_pay=mysql_query($sql_pay) or die(mysql_error());
@@ -71,12 +76,13 @@ function openpayroll($month,$year)
 {
 $mdays=cal_days_in_month(CAL_GREGORIAN, $month, $year);
 //echo $mdays."<br>";
+$yr2=$year;
 if($month>3)
 $off=12-$month+3;
 else
-$off=3-$month;
+{$off=3-$month;$yr2=$year-1;}
 $b='';$a='';
-$sql_pay="select empid,sum(monthly_gross) ytdgross,sum(incometax_month) ytdtax,sum(pf) ytdpf,sum(esi) ytdesi,$mdays mdays,$month month from payroll where year=$year group by empid";
+$sql_pay="select empid,sum(monthly_gross) ytdgross,sum(incometax_month) ytdtax,sum(pf) ytdpf,sum(esi) ytdesi,$mdays mdays,$month month from payroll where (year=$yr2 and month>3) or (year=$yr2+1 and month <4) group by empid";
 //echo $sql_pay;
 $result_pay=mysql_query($sql_pay) or die(mysql_error());
 $payr = array();
@@ -88,7 +94,7 @@ $payr[$row_pay['empid']]=array('ytdgross'=>$row_pay['ytdgross'],'ytdtax'=>$row_p
 //var_dump($payr);
 //print_r($result_pay);
 
-$sql_exempt="select * from exemption where year=$year";
+$sql_exempt="select * from exemption where year=$yr2";
 $result_exempt=mysql_query($sql_exempt) or die(mysql_error());
 $exempt= array();
 while($row_exempt=mysql_fetch_array($result_exempt))
@@ -343,7 +349,8 @@ return $pf;
 function esi($mgross,$month_gross)
 {
 $esi=0;
-if($mgross <= 15000 && $month_gross<15000)
+//addedd esi limit to 21000 as per new notification jan12017
+if($mgross <= 21000 && $month_gross<21000)
 $esi=round($mgross*0.0175);
 return $esi;
 }

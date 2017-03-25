@@ -1,0 +1,152 @@
+<?php 
+if($_SESSION['SESS_perm']=='admin' || $_SESSION['SESS_perm']=='sys_admin'){
+?>
+
+
+<?php
+$tbl=$_GET['page'];
+$tbl='load_master';
+$field_edit=array('sdate','edate','valid','ptax','lwf');
+$qual="status='Loaded'";
+$qual1="status='Promoted'";
+$qual2="status='Validated'";
+$qualn="status='NULL'";
+$field_show=array('empid','id','name','monthly_gross','sdate','edate','valid','ptax','lwf','status');
+$bt=array("Loaded","Validated","Promoted");
+$data_sql="select  status from load_master  ";
+$join="select  status from load_master  where  status=''";
+
+//loaded
+$data_sql="select status from load_master  ";
+$join=$data_sql."where $qual";
+
+//echo $data_sql;
+
+$query="select count(id) from load_master";
+$result=mysql_query($query);
+$count=(mysql_result($result,0));
+//echo "Total Rows".$count."</br>";
+$query1="select count(id) from load_master where status='Validated'";
+$result1=mysql_query($query1);
+$count1=(mysql_result($result1,0));
+//echo "validated Rows".$count1."</br>";
+if($count==$count1){
+$join=$data_sql." where $qual2";
+}
+$query2="select count(id) from load_master where status='Promoted'";
+$result2=mysql_query($query2);
+$count2=(mysql_result($result2,0));
+//echo "Promoted Rows".$count2."</br>";
+
+if(($count==$count2)&&$count1==0 ){
+//echo "kj";
+$join=$data_sql." where $qual1";
+//echo $join;
+}
+if(($count>$count1)&&($count>$count2) && $count1!=0){
+$join=$data_sql." where $qual2";
+}
+if(($count>$count1)&&$count2==0){
+$join=$data_sql." where $qual";
+}
+//echo "final Query".$join."</br>";
+$result_data=mysql_query($join);
+error_reporting(0);
+$status=(mysql_result($result_data,0));
+
+//echo $status;
+//$qual=NULL;
+
+//echo $_SESSION['SESS_tmp'];
+
+if(($status=="Loaded"))
+{
+echo input('load_master',$qual,$field_edit,$field_show);
+
+echo "<input class=\"btn btn-primary\" id=\"btn\" type=\"submit\" name=\"update\" value=\"Validate\">";
+}
+
+
+if(($status=="Validated"))
+{
+//echo $_SESSION['SESS_tmp'];
+
+$field_edit=array();
+echo input('load_master',$qual2,$field_edit,$field_show);
+
+echo "<input class=\"btn btn-primary\" id=\"btn\" type=\"submit\" name=\"addrow_master\" value=\"Promote\">";
+
+}
+if(($status=="Promoted"))
+{
+//echo $_SESSION['SESS_tmp'];
+
+$field_edit=array();
+echo input('load_master',$qual1,$field_edit,$field_show);
+echo "<input class=\"btn btn-primary\" id=\"btn_del\" type=\"submit\" name=\"delete\" value=\"Delete\">";
+
+
+}
+
+//echo input('load_master',$qual2,$field_edit,$field_show);
+
+if(isset($_POST['addrow_master'])){
+    //insert_data('master');
+$cnt=$_POST['icnt'];
+$i=0;
+while($i<$cnt)
+{
+if(isset($_POST['chb'.$i]))
+{
+	
+$val=$_POST['id'.$i];
+
+$updateStatus = mysql_query("update load_master  set status='Promoted' where id='$val'");
+$select_data = mysql_query("select * from load_master where id='$val'");
+
+
+while($row = mysql_fetch_array($select_data))
+{
+$empid = $row['empid'];
+$empname = $row['name'];
+$emppan = $row['pan'];
+$emppf = $row['pf_accno'];
+$emptype = $row['emptype'];
+$empsex = $row['sex'];
+$emp_exemp = $row['tax_slab_exemption'];
+$emp_basic = $row['basic'];
+$emp_hra = $row['hra'];
+$emp_convey = $row['conveyance'];
+$emp_c_edu = $row['child_education'];
+$emp_other = $row['other'];
+$emp_med = $row['medical_reimbursement'];
+$emp_pli = $row['performance_linked_incentives'];
+$emp_mgross = $row['monthly_gross'];
+$emp_sdate = $row['sdate'];
+$emp_edate = $row['edate'];
+$emp_valid = $row['valid'];
+$emp_ptax = $row['ptax'];
+$emp_lwf = $row['lwf'];
+$emp_doj= $row['Doj'];
+$emp_spl = $row['special_allowance'];
+$emp_uan = $row['uan_number'];
+}
+$master_count="select count(id) from master where status='Open' and empid='$empid'";
+$master_query=mysql_query($master_count);
+$countinsert=mysql_result($master_query,0);
+
+
+$insert_master =mysql_query("insert into master (empid, name, pan, pf_accno, emptype, sex, tax_slab_exemption, basic, hra, conveyance, child_education, other, medical_reimbursement, performance_linked_incentives, monthly_gross, sdate, edate, valid, ptax, lwf, Doj,status, special_allowance,uan_number) values ('$empid','$empname','$emppan', '$emppf', '$emptype', '$empsex', '$emp_exemp', '$emp_basic', '$emp_hra', '$emp_convey', '$emp_c_edu','$emp_other', '$emp_med', '$emp_pli', '$emp_mgross', '$emp_sdate', '$emp_edate', '$emp_valid', '$emp_ptax', '$emp_lwf', '$emp_doj','Open', '$emp_spl','$emp_uan')");
+
+
+}
+$i++;
+}
+echo "<script>window.location.href='home.php?page=load_master';</script>";
+}
+
+}
+else{echo "<h3><center>Sorry You don't have Admin Access</center></h3>";}
+
+
+?></br>

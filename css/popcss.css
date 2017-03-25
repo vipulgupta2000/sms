@@ -1,0 +1,50 @@
+﻿#mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9000;
+  background-color:black;
+  display: none;
+}
+
+#boxes .window {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 440px;
+  height: auto;
+  display: none;
+  z-index: 9999;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+#boxes #dialog {
+  width: 1200px;
+  height: 400px;
+  padding: 10px;
+  background-color: #ffffff;
+  font-family: 'Segoe UI Light', sans-serif;
+  font-size: 15pt;
+}
+
+#popupfoot {
+  font-size: 16pt;
+  position:absolute;
+  bottom: 30px;
+  width: 220px;
+  left: 250px;
+}
+
+.heade{
+	border: 1px solid black;
+	padding: 10px;
+	 text-align: center;
+}
+.data{
+	 border: 1px solid black;
+	 text-align:center;
+	 padding:7px;
+}
+

@@ -1,0 +1,5 @@
+label{display:inline;margin-bottom:0px;font-weight:bold}
+
+.pagination li a.active {
+    background-color: rgba(168, 173, 175, 0.57);
+}

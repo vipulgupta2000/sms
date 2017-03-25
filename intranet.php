@@ -1,0 +1,1 @@
+<center><h2>Welcome to Salary Management System</h2></center>

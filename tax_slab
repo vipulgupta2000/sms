@@ -1,0 +1,24 @@
+<?php 
+if($_SESSION['SESS_perm']=='admin' || $_SESSION['SESS_perm']=='sys_admin'){
+?>
+<div id="middle_right_top">
+<h2>Tax Slab</h2>
+</div>
+
+<?php
+$tbl=$_GET['page'];
+//$tbl='appraisal_master';
+$field_edit=array('tax_slab','rate');
+$field_show=array();
+$qual=NULL;
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{
+echo display($tbl,$qual,1,$field_show);
+addrow($tbl);
+}
+}
+else{echo "<h3><center>Sorry You don't have Admin Access</center></h3>";}
+?>

@@ -1,0 +1,37 @@
+<?php 
+if($_SESSION['SESS_perm']=='admin' || $_SESSION['SESS_perm']=='sys_admin'){
+?>
+<div id="middle_right_top">
+<h2>Payroll Status</h2>
+</div>
+
+<?php
+$tbl=$_GET['page'];
+$qual_orig=" 1=1";
+$qual=isset($_POST['qual'])?$_POST['qual']." and ".$qual_orig:$qual_orig;
+echo "Qual:<input type=\"text\" name=\"qual\" value=\"$qual\" />";
+//$tbl='appraisal_master';
+$field_edit=array('status');
+$field_show=array();
+$sql_my = "select count(status) from paystate where status = 'Open'";
+$sql_my_query = mysql_query($sql_my);
+$sql_my_result = mysql_result($sql_my_query,0);
+
+
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{
+echo display($tbl,$qual,1,$field_show);
+
+//echo "<input type='hidden' name='count' value=$sql_my_result>";
+if($sql_my_result == 0){addrow($tbl); 
+echo "<input type='hidden' id='emp' value='$_SESSION[SESS_empid]' >";}
+else{echo "<center style='color:red;font-size:15pt'><br>If Want To Add Payroll.. First Close the Existing Open Payroll.....!!!<center>";}
+
+}
+
+}
+else{echo "<h3><center>Sorry You don't have Admin Access</center></h3>";}
+?>

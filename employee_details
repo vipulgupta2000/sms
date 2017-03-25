@@ -1,0 +1,54 @@
+<?php 
+if($_SESSION['SESS_perm']=='admin' || $_SESSION['SESS_perm']=='sys_admin'){
+?>
+<div id="middle_right_top">
+<h2>Enter Employee Details</h2>
+</div>
+
+<div class="col-md-2 col-xs-12 column well">
+</div>
+<div class="col-md-10">
+<?php
+$tbl=$_GET['page'];
+//$tbl='appraisal_master';
+$qual_orig=" 1=1";
+$qual=isset($_POST['qual'])?$_POST['qual']." and ".$qual_orig:$qual_orig;
+echo "Qual:<input type=\"text\" name=\"qual\" value=\"$qual\" />";
+$field_edit=array('name','alias','designation','acc_details','salary','comment');
+//$field_edit=array();
+$field_show=array();
+//$qual=NULL;
+
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+$qual=" employee_id='1011'";
+echo input_new($tbl,$qual,$field_edit,$field_show,2);
+}else
+{
+echo display($tbl,$qual,1,$field_show);
+addrow($tbl);
+}
+
+
+  echo "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"40000\" />";
+    //<!-- Name of input element determines name in $_FILES array -->
+    echo "Send this file: <input name=\"userfile\" type=\"file\" />";
+
+?>
+</div>
+<div>  <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/3/000/0b7/06d/0df966e.jpg" alt="Vipul Gupta" height="200" width="200"></div>
+
+<?php 
+
+}
+else{echo "<h3><center>Sorry You don't have Admin Access</center></h3>";}
+?>
+<script>
+ $("td").dblclick(function(){
+   //alert($(this).prevUntil("tr").last().text());
+   //alert($(this).parent("tr").children().first().text());
+   //alert($(this).prev('input').val());
+   $("input[name=qual]").val("employee_id="+$(this).parent("tr").children().first().text());
+    $("form").submit();
+   });
+ </script>

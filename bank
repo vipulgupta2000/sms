@@ -1,0 +1,31 @@
+<?php 
+if($_SESSION['SESS_perm']=='admin' || $_SESSION['SESS_perm']=='sys_admin'){
+?>
+<div id="middle_right_top">
+<h2>Bank Entries</h2>
+</div>
+
+<?php
+$tbl=$_GET['page'];
+$qual_orig=" 1=1";
+$qual=isset($_POST['qual'])?$_POST['qual']." and ".$qual_orig:$qual_orig;
+//echo "Qual:<input type=\"text\" name=\"qual\" value=\"$qual\" />";
+//$tbl='appraisal_master';
+$field_edit=array('status');
+$field_show=array();
+//$qual=NULL;
+
+echo input($tbl,$qual,$field_edit,$field_show);
+$sql_status = mysql_query("select count(id) from bank where status ='Loaded'");
+$result_status = mysql_result($sql_status,0);
+if($result_status == 0){}
+else{echo "<center><br><input class=\"btn-danger\"  name=\"reconcile_statement\" type=\"submit\" value=\"Reconcile Bank Statement\"></center>";}
+
+if(isset($_POST['reconcile_statement']))
+{
+update($tbl);
+echo "<script>window.location.href='home.php?page=bank';</script>";
+}
+}
+else{echo "<h3><center>Sorry You don't have Admin Access</center></h3>";}
+?>

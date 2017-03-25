@@ -1,0 +1,278 @@
+<style type="text/css">
+.auto-style1 {
+	text-align: center;
+}
+.auto-style2 {
+	text-align: right;
+}
+</style>
+<table border="1" align="center">
+<?php $d = date('F j, Y ');
+$empname = $_SESSION['SESS_ename'];
+$empid = $_SESSION['SESS_empid'];
+$sql = mysql_query("select doj,sex,ptax,lwf from master where empid = '$empid' and name = '$empname'");
+
+while($row = mysql_fetch_array($sql))
+{
+$doj = getmydate($row['doj']);
+$gender = $row['sex'];
+$ptax = $row['ptax'];
+$lwf = $row['lwf'];
+}
+if($ptax == 1) {$location = 'Bangalore';}
+if($lwf == 1) {$location = 'Gurgaon';}
+?>
+<tr>
+<td colspan="3"><h4>Date: <?php echo $d; ?></h4></td>
+<td colspan="2"><h4>Reference Number: </h4></td>
+</tr>
+
+<tr><td colspan="5" class="auto-style1">Full &amp; Final Settlement Statement</td></tr>
+
+<tr><td colspan="5" style="height: 25px"></td></tr>
+
+<tr>
+<td>Employee Code</td>
+<td style="width: 150px" class="auto-style2"><?php echo $empid; ?></td>
+<td style="width: 150px"></td>
+<td>Date of Joining</td>
+<td class="auto-style2"><?php echo $doj; ?></td>
+</tr>
+
+<tr>
+<td>Employee Name</td>
+<td style="width: 150px" class="auto-style2"><?php echo $empname; ?></td>
+<td style="width: 150px"></td>
+<td>Date of Resignation</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Designation</td>
+<td class="auto-style2">Software Consultant</td>
+<td style="width: 150px"></td>
+<td>Date of Relieving</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Gender</td>
+<td class="auto-style2"><?php echo $gender; ?></td>
+<td></td>
+<td>Bank Name</td>
+<td class="auto-style2"></td>
+</tr>
+
+<tr>
+<td>Location</td>
+<td class="auto-style2"><?php echo $location ?> </td>
+<td></td>
+<td>Account Number</td>
+<td class="auto-style2"></td>
+</tr>
+
+<tr>
+<td>Notice Period</td>
+<td class="auto-style2"></td>
+<td></td>
+<td>Notice Served</td>
+<td class="auto-style2"></td>
+</tr>			
+
+<tr>
+<td>No of days to be paid</td>
+<td class="auto-style2"></td>
+<td></td>
+<td>Leave Encashment Days</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Salary Last Paid for</td>
+<td class="auto-style2"></td>
+<td></td>
+<td>No of Days in Month</td>
+<td class="auto-style2"></td>
+</tr>
+
+<tr><td colspan="5" style="height: 25px"></td></tr>
+
+<tr>
+<td colspan="3" class="auto-style1">Earning</td>
+<td colspan="2" class="auto-style1">Deduction</td>
+</tr>
+
+
+<tr>
+<td>Location</td>
+<td class="auto-style2"><?php echo  $location ?></td>
+<td></td>
+<td>Account Number</td>
+<td></td>
+</tr>
+
+
+<tr>
+<td>Headers	</td>
+<td class="auto-style2">Actual  Salary</td>
+<td class="auto-style2">Current Earning</td>
+<td>Headers</td>
+<td class="auto-style2">Deduction</td>
+</tr>
+
+<tr>
+<td>Basic</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>PF</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Child Education</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Prof. Tax</td>
+<td class="auto-style2"></td>
+</tr>
+
+<tr>
+<td>Conveyance</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Labour Welfare Fund</td>
+<td class="auto-style2"></td>
+</tr>
+
+<tr>
+<td>HRA</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Income Tax</td>
+<td class="auto-style2"></td>
+</tr>
+
+<tr>
+<td>Special Allowances</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Short Notice Recovery</td>
+<td class="auto-style2"></td>
+</tr>
+
+<tr>
+<td>PLIB</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Arrears Deduction</td>
+<td class="auto-style2"></td>
+</tr>
+
+<tr>
+<td>Transport Allowance</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Personal Courier</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Lunch Allowance</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Personal TEL PH Recovery</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Leave Encashment</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Lunch Coupons</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Gift(tax/non Tax)</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Relocation Expenses</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Night Shift Allowance</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Salary Advance</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Oncall Allowance</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Travel Expenses</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Project Allowance</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Others</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Laptop Allowance</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Accidental Insurance Premium</td>
+<td class="auto-style2"></td>
+</tr>
+
+<tr>
+<td>PLIB</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Medical Insurance</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Reward(tax/non tax)</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Term life insurance Premium</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td>Gross Earning</td>
+<td class="auto-style2"></td>
+<td class="auto-style2"></td>
+<td>Gross Deduction</td>
+<td class="auto-style2"></td>
+</tr>
+
+
+<tr>
+<td colspan="4">Net Payment</td>
+<td class="auto-style2"></td>
+</tr>
+</table>
+

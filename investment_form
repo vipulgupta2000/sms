@@ -1,0 +1,534 @@
+<style type="text/css">
+.auto-style1 {
+	text-align: center;
+}
+.auto-style2 {
+	font-size: large;
+}
+.auto-style3 {
+	font-size: medium;
+}
+.auto-style4 {
+	text-align: right;
+}
+.auto-style5 {
+	color: #FF0000;
+}
+.auto-style6 {
+	text-decoration: underline;
+}
+</style>
+
+
+
+<?php
+$id = $_SESSION['SESS_empid']; 
+$name = $_SESSION['SESS_ename'];
+$sql = mysql_query("select pan from master where empid = ".$id);
+$pan = mysql_result($sql,0);
+$curr_date = date("d-M-Y");
+echo $curr_date;
+?>
+
+
+<table border=1 align="center" style="width: 1026px">
+
+<tr><td colspan=6><center class="auto-style2"><strong>Investment Declaration Form for FY 2015-16</strong></center></td></tr>
+
+<tr><td colspan=6><center class="auto-style3">InputZero Technologies Pvt Ltd</center></td></tr>
+
+<tr>
+<td style="width: 257px">Emp No.</td>
+<td style="width: 591px"><?php echo $id; ?></td>
+<td style="width: 472px">Name</td>
+<td style="width: 261px" colspan='2'><?php echo $name; ?></td>
+</tr>
+
+<tr>
+<td style="width: 257px">PAN</td>
+<td style="width: 591px"><?php echo $pan; ?></td>
+<td style="width: 472px">Mobile Number</td>
+<td style="width: 261px" colspan='2'><input type='text' name='mobile'/></td>
+</tr>
+
+<tr>
+<td colspan=4><center>Details of Dependents</center></td>
+<td style="width: 285px">Address:</td>
+</tr>
+
+<tr>
+<td class="auto-style1" style="width: 257px">S no.</td>
+<td class="auto-style1" style="width: 591px">Name</td>
+<td class="auto-style1" style="width: 472px">Relation</td>
+<td class="auto-style1" style="width: 261px">Age</td>
+<td rowspan=6 style="width: 285px"><TEXTAREA style='resize:none;' cols=35 rows=10 name='address'></TEXTAREA></td>
+</tr>
+
+<tr>
+<td style="width: 257px">1.</td>
+<td style="width: 591px"><input type='text' name='name1'/></td>
+<td style="width: 472px"><input type='text' name='relation1'/></td>
+<td style="width: 261px"><input type='text' name='age1'/></td>
+</tr>
+
+<tr>
+<td style="width: 257px">2.</td>
+<td style="width: 591px"><input type='text' name='name2'/></td>
+<td style="width: 472px"><input type='text' name='relation2'/></td>
+<td style="width: 261px"><input type='text' name='age2'/></td>
+</tr>
+
+<tr>
+<td style="width: 257px">3.</td>
+<td style="width: 591px"><input type='text' name='name3'/></td>
+<td style="width: 472px"><input type='text' name='relation3'/></td>
+<td style="width: 261px"><input type='text' name='age3'/></td>
+</tr>
+
+<tr>
+<td style="width: 257px">4.</td>
+<td style="width: 591px"><input type='text' name='name4'/></td>
+<td style="width: 472px"><input type='text' name='relation4'/></td>
+<td style="width: 261px"><input type='text' name='age4'/></td>
+</tr>
+
+<tr>
+<td style="width: 257px">5.</td>
+<td style="width: 591px"><input type='text' name='name5'/></td>
+<td style="width: 472px"><input type='text' name='relation5'/></td>
+<td style="width: 261px"><input type='text' name='age5'/></td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">S.No.</td>
+<td style="width: 591px" class="auto-style1">Particular</td>
+<td class="auto-style1" style="width: 472px">Please Fill in</td>
+<td class="auto-style1" style="width: 261px">Amount Declared by you in the</td>
+<td style="width: 285px" class="auto-style1">Remarks</td>
+</tr>
+
+<tr>
+<td rowspan=13 style="width: 257px" class="auto-style1">1.</td>
+<td style="width: 591px">Rent Paid/ Payable for:</td>
+<td style="width: 472px">(Metro/ Non Metro)</td>
+<td style="width: 261px">Amount Rs.</td>
+<td rowspan=14 style="width: 285px">
+Please enter your Monthly Rent details as per the Rent Receipt / Lease Deed, with necessary details as Tenant Name, Owner name, rented property address, PAN no of owner, payment details, revenue stamp.<br>
+Note:-<br>
+#  Employee who is paying  rent above Rs. 8333/- per month, he/she need to submit PAN Card details of Owner. <br>
+#  Rent Receipt will be submitted  quarterly. For one quarter one rent receipt of any one month of the quarter need to be submitted.<br>
+# Rent receipts has to be duly signed by the owner on 1 Rs Revenue Stamp 
+</td>
+</tr>
+
+<tr>
+<td style="width: 591px">April</td>
+<td style="width: 472px"><input type='text' name='april_city'/></td>
+<td style="width: 261px"><input type='text' name='april_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">May</td>
+<td style="width: 472px"><input type='text' name='may_city'/></td>
+<td style="width: 261px"><input type='text' name='may_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">June</td>
+<td style="width: 472px"><input type='text' name='june_city'/></td>
+<td style="width: 261px"><input type='text' name='june_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">July</td>
+<td style="width: 472px"><input type='text' name='july_city'/></td>
+<td style="width: 261px"><input type='text' name='july_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">August</td>
+<td style="width: 472px"><input type='text' name='aug_city'/></td>
+<td style="width: 261px"><input type='text' name='aug_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">September</td>
+<td style="width: 472px"><input type='text' name='sep_city'/></td>
+<td style="width: 261px"><input type='text' name='sep_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">October</td>
+<td style="width: 472px"><input type='text' name='oct_city'/></td>
+<td style="width: 261px"><input type='text' name='oct_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">November</td>
+<td style="width: 472px"><input type='text' name='nov_city'/></td>
+<td style="width: 261px"><input type='text' name='nov_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">December</td>
+<td style="width: 472px"><input type='text' name='dec_city'/></td>
+<td style="width: 261px"><input type='text' name='dec_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">January</td>
+<td style="width: 472px"><input type='text' name='jan_city'/></td>
+<td style="width: 261px"><input type='text' name='jan_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">February</td>
+<td style="width: 472px"><input type='text' name='feb_city'/></td>
+<td style="width: 261px"><input type='text' name='feb_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 591px">March</td>
+<td style="width: 472px"><input type='text' name='march_city'/></td>
+<td style="width: 261px"><input type='text' name='march_amt'/></td>
+</tr>
+
+<tr>
+<td style="width: 257px"></td>
+<td style="width: 591px" colspan=2>Total</td>
+<td style="width: 261px"><input type='text' id='rent_total'/></td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">S.No.</td>
+<td style="width: 591px" class="auto-style1">Particular</td>
+<td class="auto-style1" style="width: 472px">Maximum Limit (Rs)</td>
+<td class="auto-style1" style="width: 261px">Amount Rs.</td>
+<td style="width: 285px" class="auto-style1">Remarks</td>
+</tr>
+
+<tr>
+<td rowspan=3 style="width: 257px" class="auto-style1" >2.</td>
+<td style="width: 591px" class="auto-style1">Interest on Housing Loan u/s 24<br>(If the house is self occupied and the loan was taken before April 1999).<br>Bankers Certificate to be submitted</td>
+<td class="auto-style1" style="width: 472px">Upto Rs. 30000/-<br>(If Self Occupied)</td>
+<td style="width: 261px"><input type='text' name='int_house1'/></td>
+<td style="width: 285px">Please fill attached House Property Declaration form and it is COMPULSORY for claiming the deduction.</td>
+
+</tr>
+
+<tr>
+<td style="width: 591px" class="auto-style1">Interest on Housing Loan u/s 24<br>(If the house is self occupied and the loan was taken on or after April 1999).<br>Bankers Certificate to be submitted</td>
+<td class="auto-style1" style="width: 472px">Max Limit - Rs. 2,00,000/- <br>(If Self Occupied)</td>
+<td style="width: 261px"><input type='text' name='int_house2'/></td>
+<td style="width: 285px">Please fill attached House Property Declaration form and it is COMPULSORY for claiming the deduction.</td>
+</tr>
+
+<tr>
+<td style="width: 591px" class="auto-style1">Interest on Housing Loan u/s 24<br>(Let out/ Deemed to be let out)<br>Bankers Certificate to be submitted<br>[if the property is LET OUT/DEEMED LET OUT - Actual Rental Income OR Gross Annual Value MUST be specified]</td>
+<td class="auto-style1" style="width: 472px">- No Limit -<br>(If Let Out)</td>
+<td style="width: 261px"><input type='text' name='int_house3'/></td>
+<td style="width: 285px">Please fill attached House Property Declaration form and it is COMPULSORY for claiming the deduction.</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">S.No.</td>
+<td style="width: 591px" class="auto-style1">Particular</td>
+<td class="auto-style1" style="width: 472px">Maximum Limit (Rs)</td>
+<td class="auto-style1" style="width: 261px">Amount Rs.</td>
+<td style="width: 285px" class="auto-style1">Remarks</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">3.</td>
+<td style="width: 591px" class="auto-style1">Sec. 80CCD (1B)<br>National Pension Scheme</td>
+<td class="auto-style1" style="width: 472px">Rs. 50000/-<br>(Proposed in Budget - 2015)</td>
+<td style="width: 261px"><input type='text' name='nps'/></td>
+<td style="width: 285px">Amount contributed to National Pension Scheme by employee</td>
+</tr>
+
+<tr>
+<td rowspan=2 style="width: 257px" class="auto-style1">4.</td>
+<td rowspan=2 style="width: 591px" class="auto-style1">Sec 80D (Medi Claim Policy &amp; Preventive health check up)<br>(Overall limit proposed in Budget 2015 - Rs.30000/-)</td>
+<td class="auto-style1" style="width: 472px">Rs. 15,000/- (or) Rs.20,000/- <br>(Proposed limit in Budget 2015 - Rs. 25000/- (or) Rs.30000/-)</td>
+<td style="width: 261px"><input type='text' name='medi_claim1'/></td>
+<td style="width: 285px">Medical Insurance Premium PAID by Employee:<br>- on the health of employee, spouse, and dependent children (Payment must be made by cheque only).<br> [Rs.20,000/- In case employee is a Senior Citizen] (i.e., 60 years or more).<br>Payment made by an employee  for preventive health check-up of self, spouse, dependent children during the financial year is eligible for maximum deduction of Rs 5000.<br>Note:<br>The amount  paid is within the overall limits ( Rs. 15000/Rs. 20000).PAYMENT HAS TO BE MADE BY CHEQUE AND NOT BY CASH</td>
+</tr>
+
+<tr>
+<td class="auto-style1" style="width: 472px">Rs. 15,000/- (or) Rs.20,000/- <br>(Proposed limit in Budget 2015 - Rs. 25000/- (or) Rs.30000/-)</td>
+<td style="width: 261px"><input type='text' name='medi_claim2'/></td>
+<td style="width: 285px">Medical Insurance Premium PAID by Employee:<br>-  on the health of parents (even not dependent on employee) (Payment must be made by Cheque only).<br>[Rs.20,000/- In the case  parents are  Senior Citizen]i.e., 60 years or more payment made by an employee  for preventive health check-up of  parents during the financial year is eligible for maximum deduction of Rs 5000.PAYMENT HAS TO BE MADE BY CHEQUE AND NOT BY CASH <br>Note:<br>The amount  paid is within the overall limits ( Rs. 15000/Rs. 20000).</td>
+</tr>
+
+<tr><td colspan=5 style="height: 41px"></td></tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">S.No.</td>
+<td style="width: 591px" class="auto-style1">Particular</td>
+<td class="auto-style1" style="width: 472px">Maximum Limit (Rs)</td>
+<td class="auto-style1" style="width: 261px">Amount Rs.</td>
+<td style="width: 285px" class="auto-style1">Remarks</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">6.</td>
+<td style="width: 591px" class="auto-style1">Sec 80E (Education Loan)<br>Please mention Initial Year<br>(Year in which Interest payment started)</td>
+<td class="auto-style1" style="width: 472px">No limit(only Interest Portion)</td>
+<td style="width: 261px"><input type='text' name='edu_loan'/></td>
+<td style="width: 285px">Interest on Loan taken for Higher Education:<br>Amount paid by employee during the financial year on loan taken for higher education of <br>- Employee, spouse or children of employee or students for whom employee is a legal guardian<br><strong>Benefit Period:</strong><br>Upto 8 years from initial year</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">7.</td>
+<td style="width: 591px" class="auto-style1">Donations</td>
+<td class="auto-style1" style="width: 472px">Under Section 80G</td>
+<td style="width: 261px"><input type='text' name='donation'/></td>
+<td style="width: 285px">Receipt should have Name, Pan No of donee and section under which the benefit is available.</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">8.</td>
+<td style="width: 591px" class="auto-style1">Sec 80U (For person with a disability)</td>
+<td class="auto-style1" style="width: 472px">Rs. 50,000/- (Rs.1,00,000/- for Severe disability)<br>(Propsed limit in budget 2015 - Rs. 75,000/- and Rs. 1,25,000 for severe disability)</td>
+<td style="width: 261px"><input type='text' name='sec_80U'/></td>
+<td style="width: 285px">Here Employee gets fixed amount of deduction.<br>(Form 10-IA obtained from Medical Authority has to be submitted)</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">S.No.</td>
+<td style="width: 591px" class="auto-style1">Particular</td>
+<td class="auto-style1" style="width: 472px">Max Benefit Permissible (Rs)</td>
+<td class="auto-style1" style="width: 261px">Amount Rs.</td>
+<td style="width: 285px" class="auto-style1">Remarks</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">9.</td>
+<td style="width: 591px" class="auto-style1">Life Insurance Premium</td>
+<td class="auto-style1" style="width: 472px" rowspan="13">Maximum amount eligible for Deduction under section 80C &amp; 80CCC Categories is Rs.1,50,000/-</td>
+<td style="width: 261px"><input type='text' name='life_ins_perm'/></td>
+<td style="width: 285px" class="auto-style1">Self , Spouse &amp; Children only</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">10.</td>
+<td style="width: 591px" class="auto-style1">Public Provident Fund(PF)</td>
+<td style="width: 261px"><input type='text' name='ppf'/></td>
+<td style="width: 285px" class="auto-style1">Self , Spouse &amp; Children only, Submit PPF challan or PPF passbook front page with entries</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">11.</td>
+<td style="width: 591px" class="auto-style1">Provident Fund (PF)</td>
+<td style="width: 261px"><input type='text' name='pf'/></td>
+<td style="width: 285px" class="auto-style1">Deducted from salary</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">12.</td>
+<td style="width: 591px" class="auto-style1">Pension Fund Contribution</td>
+<td style="width: 261px"><input type='text' name='pension_fund'/></td>
+<td style="width: 285px" class="auto-style1">Self only</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">13.</td>
+<td style="width: 591px" class="auto-style1">National Savings Certificate (NSC)</td>
+<td style="width: 261px"><input type='text' name='nsc'/></td>
+<td style="width: 285px" class="auto-style1">Self only</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">14.</td>
+<td style="width: 591px" class="auto-style1">Interest Accrued on NSC (Reinvested)</td>
+<td style="width: 261px"><input type='text' name='ins_nsc'/></td>
+<td style="width: 285px" class="auto-style1">Self only</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">15.</td>
+<td style="width: 591px" class="auto-style1">Unit Linked Insurance Policy (ULIP)</td>
+<td style="width: 261px"><input type='text' name='ulip'/></td>
+<td style="width: 285px" class="auto-style1">Self , Spouse &amp; Children only</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">16.</td>
+<td style="width: 591px" class="auto-style1">ELSS or a Specified Tax Saver Plan<br>(Lock in period of 3 years)</td>
+<td style="width: 261px"><input type='text' name='elss'/></td>
+<td style="width: 285px" class="auto-style1">Self only</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">17.</td>
+<td style="width: 591px" class="auto-style1">Payment of Tuition fees for Children<br>(Max 2 Children) for Full Time Education only.</td>
+<td style="width: 261px"><input type='text' name='tut_fee'/></td>
+<td style="width: 285px" class="auto-style1">Two children only</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">18.</td>
+<td style="width: 591px" class="auto-style1">Principal repayment of Housing Loan</td>
+<td style="width: 261px"><input type='text' name='principle_replayment'/></td>
+<td style="width: 285px" class="auto-style1">Self &amp; Joint a/c holder</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">19.</td>
+<td style="width: 591px" class="auto-style1">Registration charges incurred for Buying House (I year Only)</td>
+<td style="width: 261px"><input type='text' name='buy_house_charge'/></td>
+<td style="width: 285px" class="auto-style1">Self only</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">20.</td>
+<td style="width: 591px" class="auto-style1"><span class="auto-style5"><strong>Scheduled</strong></span> Bank Fixed Deposit for 5 Years &amp; above</td>
+<td style="width: 261px"><input type='text' name='bank_fd'/></td>
+<td style="width: 285px" class="auto-style1" rowspan="2">Self only, Stipulated Bank Stamp Required<br>Marked as ""for Income Tax purpose only""</td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1">21.</td>
+<td style="width: 591px" class="auto-style1">Term Deposit for  5years &amp; above</td>
+<td style="width: 261px"><input type='text' name='term_deposit'/></td>
+</tr>
+
+<tr>
+<td style="width: 257px" class="auto-style1"></td>
+<td style="width: 591px" class="auto-style1"><strong>TOTAL (Sum of 9 to 21)</strong></td>
+<td style="width: 261px"></td>
+<td style="width: 261px"><input type='text' name='total'/></td>
+<td style="width: 285px" class="auto-style1">(@) Enter the total amount in below declaration.</td>
+</tr>
+
+<br><br>
+<tr>
+<td colspan="5"><p>It is hereby declared and confirmed that in view of above I am entitled to deduction of Rs._________ (@)  from my income chargeable under the head salary and accordingly it be considered while deducting the tax at source. It is hereby further declared and confirmed that in the event of any shortfall in my depositing or furnishing any of the above stated financial information  and in consequence thereof if any shortfall in deduction of tax at source is arising by M/s Corona Remedies Pvt.Ltd and if M/s Corona Remedies Pvt.Ltd has to suffer any loss of whatsoever nature under provisions of the Income tax Act, 1961 I shall indemnify the said loss to M/s Corona Remedies Pvt.Ltd immediately on I being called upon by M/s Corona Remedies Pvt. Ltd.</p></td>
+</tr>
+
+<tr><td colspan=5 style="height: 41px"></td></tr>
+
+<tr>
+<td>Name</td>
+<td style="width: 261px"><?php echo $name; ?></td>
+<td rowspan="3"></td>
+<td rowspan="2" colspan="2"><TEXTAREA style='resize:none;' cols=27 rows=3 name='sign'></TEXTAREA></td>
+
+</tr>
+
+<tr>
+<td>Place</td>
+<td style="width: 261px"><input type='text' name='place'/></td>
+
+</tr>
+
+<tr>
+<td>Date</td>
+<td style="width: 261px" ><?php echo $curr_date; ?></td>
+<td><input type='submit' name='sign' value='Signature'/></td>
+<td colspan="2">Signature of the Employee</td>
+</tr>
+
+<tr>
+<td colspan="5"><p><span class="auto-style6"><strong>Guidelines to FILL</strong></span><br>		
+1. Metro City	  Mumbai / Delhi / Calcutta / Chennai<br>
+2. Non Metro City	  All Other Cities<br>
+3. Please fill in and submit the same along with the Supporting documents<br>
+4. Provisional Loan Certificate for House from Banker - must be submitted in respect All the properties declared by employee in the above table<br>
+5. Any change in the format or deduction matter will be circulated seperately, if required.<br>
+			
+</p></td>
+</tr>
+
+</table>
+
+<center><input type='submit' name='investment' value='Submit Investment'/></center>
+
+<?php
+
+if(isset($_POST['investment'])){
+if($_POST['name1'] == ""){$dep1_1 = null;}
+else{$dep1_1 = $_POST['name1']."#".$_POST['relation1']."#".$_POST['age1'];}
+
+if($_POST['name2'] == ""){$dep2_2 = null;}
+else{$dep2_2 = $_POST['name2']."#".$_POST['relation2']."#".$_POST['age2'];}
+
+if($_POST['name3'] == ""){$dep3_3 = null;}
+else{$dep3_3 = $_POST['name3']."#".$_POST['relation3']."#".$_POST['age3'];}
+
+if($_POST['name4'] == ""){$dep4_4 = null;}
+else{$dep4_4 = $_POST['name4']."#".$_POST['relation4']."#".$_POST['age4'];}
+
+if($_POST['name5'] == ""){$dep5_5 = null;}
+else{$dep5_5 = $_POST['name5']."#".$_POST['relation5']."#".$_POST['age5'];}
+
+if(strtolower($_POST['april_city']) == 'mumbai' || strtolower($_POST['april_city']) == 'delhi' || strtolower($_POST['april_city']) == 'kolkata' || strtolower($_POST['april_city']) == 'chennai'){$_POST['april_city'] = 'Metro';} else{$_POST['april_city'] = 'Non Metro';}
+
+if(strtolower($_POST['may_city']) == 'mumbai' || strtolower($_POST['may_city']) == 'delhi' || strtolower($_POST['may_city']) == 'kolkata' || strtolower($_POST['may_city']) == 'chennai'){$_POST['may_city'] = 'Metro';} else{$_POST['may_city'] = 'Non Metro';}
+
+if(strtolower($_POST['june_city']) == 'mumbai' || strtolower($_POST['june_city']) == 'delhi' || strtolower($_POST['june_city']) == 'kolkata' || strtolower($_POST['june_city']) == 'chennai'){$_POST['june_city'] = 'Metro';} else{$_POST['june_city'] = 'Non Metro';}
+
+if(strtolower($_POST['july_city']) == 'mumbai' || strtolower($_POST['july_city']) == 'delhi' || strtolower($_POST['july_city']) == 'kolkata' || strtolower($_POST['july_city']) == 'chennai'){$_POST['july_city'] = 'Metro';} else{$_POST['july_city'] = 'Non Metro';}
+
+if(strtolower($_POST['aug_city']) == 'mumbai' || strtolower($_POST['aug_city']) == 'delhi' || strtolower($_POST['aug_city']) == 'kolkata' || strtolower($_POST['aug_city']) == 'chennai'){$_POST['aug_city'] = 'Metro';} else{$_POST['aug_city'] = 'Non Metro';}
+
+if(strtolower($_POST['sep_city']) == 'mumbai' || strtolower($_POST['sep_city']) == 'delhi' || strtolower($_POST['sep_city']) == 'kolkata' || strtolower($_POST['sep_city']) == 'chennai'){$_POST['sep_city'] = 'Metro';} else{$_POST['sep_city'] = 'Non Metro';}
+
+if(strtolower($_POST['oct_city']) == 'mumbai' || strtolower($_POST['oct_city']) == 'delhi' || strtolower($_POST['oct_city']) == 'kolkata' || strtolower($_POST['oct_city']) == 'chennai'){$_POST['oct_city'] = 'Metro';} else{$_POST['oct_city'] = 'Non Metro';}
+
+if(strtolower($_POST['nov_city']) == 'mumbai' || strtolower($_POST['nov_city']) == 'delhi' || strtolower($_POST['nov_city']) == 'kolkata' || strtolower($_POST['nov_city']) == 'chennai'){$_POST['nov_city'] = 'Metro';} else{$_POST['nov_city'] = 'Non Metro';}
+
+if(strtolower($_POST['dec_city']) == 'mumbai' || strtolower($_POST['dec_city']) == 'delhi' || strtolower($_POST['dec_city']) == 'kolkata' || strtolower($_POST['dec_city']) == 'chennai'){$_POST['dec_city'] = 'Metro';} else{$_POST['dec_city'] = 'Non Metro';}
+
+if(strtolower($_POST['jan_city']) == 'mumbai' || strtolower($_POST['jan_city']) == 'delhi' || strtolower($_POST['jan_city']) == 'kolkata' || strtolower($_POST['jan_city']) == 'chennai'){$_POST['jan_city'] = 'Metro';} else{$_POST['jan_city'] = 'Non Metro';}
+
+if(strtolower($_POST['feb_city']) == 'mumbai' || strtolower($_POST['feb_city']) == 'delhi' || strtolower($_POST['feb_city']) == 'kolkata' || strtolower($_POST['feb_city']) == 'chennai'){$_POST['feb_city'] = 'Metro';} else{$_POST['feb_city'] = 'Non Metro';}
+
+if(strtolower($_POST['march_city']) == 'mumbai' || strtolower($_POST['march_city']) == 'delhi' || strtolower($_POST['march_city']) == 'kolkata' || strtolower($_POST['march_city']) == 'chennai'){$_POST['march_city'] = 'Metro';} else{$_POST['march_city'] = 'Non Metro';}
+
+if($_POST['april_amt'] == ""){$april_rent = null;}
+else{$april_rent = $_POST['april_city']."#".$_POST['april_amt'];}
+
+if($_POST['may_amt'] == ""){$may_rent = null;}
+else{$may_rent = $_POST['may_city']."#".$_POST['may_amt'];}
+
+if($_POST['june_amt'] == ""){$june_rent = null;}
+else{$june_rent = $_POST['june_city']."#".$_POST['june_amt'];}
+
+if($_POST['july_amt'] == ""){$july_rent = null;}
+else{$july_rent = $_POST['july_city']."#".$_POST['july_amt'];}
+
+if($_POST['aug_amt'] == ""){$aug_rent = null;}
+else{$aug_rent = $_POST['aug_city']."#".$_POST['aug_amt'];}
+
+if($_POST['sep_amt'] == ""){$sep_rent = null;}
+else{$sep_rent = $_POST['sep_city']."#".$_POST['sep_amt'];}
+
+if($_POST['oct_amt'] == ""){$oct_rent = null;}
+else{$oct_rent = $_POST['oct_city']."#".$_POST['oct_amt'];}
+
+if($_POST['nov_amt'] == ""){$nov_rent = null;}
+else{$nov_rent = $_POST['nov_city']."#".$_POST['nov_amt'];}
+
+if($_POST['dec_amt'] == ""){$dec_rent = null;}
+else{$dec_rent = $_POST['dec_city']."#".$_POST['dec_amt'];}
+
+if($_POST['jan_amt'] == ""){$jan_rent = null;}
+else{$jan_rent = $_POST['jan_city']."#".$_POST['jan_amt'];}
+
+if($_POST['feb_amt'] == ""){$feb_rent = null;}
+else{$feb_rent = $_POST['feb_city']."#".$_POST['feb_amt'];}
+
+if($_POST['march_amt'] == ""){$march_rent = null;}
+else{$march_rent = $_POST['march_city']."#".$_POST['march_amt'];}
+
+$total_rent = $_POST['april_amt'] + $_POST['may_amt'] + $_POST['june_amt'] + $_POST['july_amt'] + $_POST['aug_amt'] + $_POST['sep_amt'] + $_POST['oct_amt'] + $_POST['nov_amt'] + $_POST['dec_amt'] + $_POST['jan_amt'] + $_POST['feb_amt'] + $_POST['march_amt'];
+
+
+
+$sql = mysql_query("insert into investment_declaration (empid,name,pan,mobile,dep1,dep2,dep3,dep4,dep5,dep_address,april,may,june,july,august,september,october,november,december,january,february,march,total_rent,int_house_1,int_house_2,int_house_3,nps,medi_claim_policy_1,medi_claim_policy_2,education_loan,donation,sec80u_disability,life_insurance_premium,ppf,pf,pension_fund,nsc,int_on_nsc,ulip,elss,tution_fees,principle_repayment,buying_house_reg_charge,bank_fixed_deposit,term_deposit,total,place,date) values ('$id','$name','$pan','$_POST[mobile]','$dep1_1','$dep2_2','$dep3_3','$dep4_4','$dep5_5','$_POST[address]','$april_rent','$may_rent','$june_rent','$july_rent','$aug_rent','$sep_rent','$oct_rent','$nov_rent','$dec_rent','$jan_rent','$feb_rent','$march_rent','$total_rent','$_POST[int_house1]','$_POST[int_house2]','$_POST[int_house3]','$_POST[nps]','$_POST[medi_claim1]','$_POST[medi_claim2]','$_POST[edu_loan]','$_POST[donation]','$_POST[sec_80U]','$_POST[life_ins_perm]','$_POST[ppf]','$_POST[pf]','$_POST[pension_fund]','$_POST[nsc]','$_POST[ins_nsc]','$_POST[ulip]','$_POST[elss]','$_POST[tut_fee]','$_POST[principle_replayment]','$_POST[buy_house_charge]','$_POST[bank_fd]','$_POST[term_deposit]','$_POST[total]','$_POST[place]','$curr_date')");
+}
+?>
+
+
+

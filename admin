@@ -1,0 +1,44 @@
+<?php 
+$tbl="field";	
+$field_show=array();
+$qual_orig=" 1=1";
+$qual=isset($_POST['qual'])?$_POST['qual']." and ".$qual_orig:$qual_orig;
+echo "Qual:<input type=\"text\" name=\"qual\" value=\"$qual\" />";
+//$qual=NULL;
+$tblid=isset($_POST['tblid'])?$_POST['tblid']:NULL;
+echo "tblid is".$tblid;
+echo "tblid:<input type=\"text\" name=\"tblid\" value=\"$tblid\" />";
+
+if(isset($tblid))
+{
+echo input($tbl,$qual,$field_show,$field_show);
+}else
+{
+echo display('config',$qual,1,$field_show);
+}
+echo " Please click button to create table in the database\t";
+
+if(isset($_POST['create_tbl']))
+{
+$result=mysql_query("select name from config where tblid='$_POST[tblid]'");
+echo $result;
+$tbl=mysql_result($result,0);
+echo "123".$tbl;
+$sqli=create($tbl);
+echo $sqli;
+/*if(!mysql_query($sqli))
+	{
+	die.mysql_error();
+	}
+*/
+}
+echo "<input class=\"btn-success\" id=\"btn\" type=\"submit\" name=\"create_tbl\" value=\"create\">";
+?>
+<script>
+
+$("td").dblclick(function(){
+//alert($(this).parent().children().first().text());
+$("input[name=qual]").val("tblid="+$(this).parent().children().first().text());
+$("form").submit();
+});
+</script>

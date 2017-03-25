@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Change Log</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/style.css" rel="stylesheet"/>
+    </head>
+    <body>
+        
+         <div style="background-color: #f3f3f3; color: #000">
+              <h4>Following is the changes done on 31/12/2016 v1.7 of sms </h4>
+            <div>
+            <h5>Update following files</h5> 
+            <ul>
+            <li>home.php</li>   
+            <li>js/tinymce</li>
+            <li>templates</li>
+            <li>mypack</li>
+            <li>releaseoffer</li>
+            <li>css/style.css</li>
+            <li>lib/utils.php</li>
+            <li>lib/update.php</li>
+            <li>lib/addrow.php</li>
+            <li>lib/insert.php</li>
+            <i></i>  
+                <li>changelog.html</li><i>Contains changes for this release v1.7</i>
+            </ul>
+            
+        </div>
+               <div>
+            <h5>Data Changes</h5> 
+            <ul>
+                <li>add records in config</li>
+                <i>mypack,templates,releaseoffer</i>
+                <li>Add record in access table</li>
+                    <i>give access to admins on templates</i>
+                <li>Add releaseoffer record in access table</li>
+                  <i>give access to admin on releaseoffer</i>
+                <li>Add mypack record in access table</li>
+                    <i>give access to users on mypack</i>    
+                <li>Add fields to master by running below sql</li>
+                 <i>alter table master add stat_bonus int(9), add pf int(9), add gratuity int(9), add med_ins_prem int(9), add acc_ins_prem int(9), add ctc int(9), add designation varchar(30), add location varchar(20), add ybasic int(9), add yhra int(9), add yspecial_allowance int(9), add yconveyance int(9), add ychild_education int(9), add ystat_bonus int(9)</i>
+                <li>Add fields to load_master by running below sql</li>
+                 <i>alter table load_master add stat_bonus int(9), add pf int(9), add gratuity int(9), add med_ins_prem int(9), add acc_ins_prem int(9), add ctc int(9), add designation varchar(30), add location varchar(20), add ybasic int(9), add yhra int(9), add yspecial_allowance int(9), add yconveyance int(9), add ychild_education int(9), add ystat_bonus int(9)</i>
+                 <li>load events table data & file from events file</li>
+                 <li>load field</li>
+                 <li>Load master fields in fields table</li>
+                <i>import file fields_master.xls to fields table</i>
+                <li>Load loadmaster fields in fields table</li>
+                <i>import file fields_loadmaster.xls to fields table</i>
+                SELECT id,name,empid,from_unixtime(edate),valid FROM `master` WHERE valid=0
+                79 rows on 106
+                update master set valid=2 where valid=0
+                <li>Import the table releaseoffer in database using phpadmin</li>
+                <i>db/releaseoffer.sql</i>
+                <li>Using excel import load following files in master</li>
+                <i>dataload>LoadMaster*.xls</i>
+                     <li>Using excel import load following files in field</li>
+                <i>dataload>fields_releaseoffer.xls if tblid=67 else change it</i> 
+                <li>Add under field_option 2 options as yes:0 and No:1 for processing enable field in rleaseoffer</li>  
+            </ul>
+            
+        </div>
+         </div>
+        <div style="background-color: #737373; color: #000">
+              <h4>Following is the changes done on 24/11/2016 v1.6 of sms </h4>
+            <div>
+            <h5>Update following files</h5> 
+            <ul>
+            <li>lib/sms_utils.php</li>
+            <i>added code on line 154 to consider ytd gross for end dated employees</i>  
+                <li>changelog.html</li><i>Contains changes for this release v1.6</i>
+            </ul>
+            
+        </div>
+                   
+        <div>   
+            <h5>Commands Run</h5>   
+        </div>
+            <div>
+            <h5>Config Changes</h5> 
+            <ul>
+                <li></li><i></i>
+             
+            </ul>
+            
+        </div>
+            <div>
+            <h5>Data Changes</h5> 
+            <ul>
+                <li></li><i></i>
+            </ul>
+            
+        </div>
+        </div>  
+        
+        <div style="background-color:blue; color: whitesmoke"><h4>Following is the changes done on 30/10/2016 v1.5 of sms </h4>
+            <div>
+            <h5>Update following files</h5> 
+            <ul>
+                <li>master</li><i>Search enabled</i>
+                <li>payroll</li><i>Search enabled</i>
+                <li>home.php</li><i>Events are now called here</i>
+                <li>lib/events.php</li><i>code for enable disable script</i>
+                <li>lib/insert.php</li><i>events.php is not used here now</i>
+                <li>lib/utils.php</li><i>search now holds to each page as hyperlink disabled</i>
+                <li>lib/sms_utils.php</li><i>added code on line 139 to read bonus from loaded_payroll</i>
+                <li>emp_sal_slip.php</li><i>PLIB renamed to Bonus</i>
+                <li>changelog.html</li><i>Contains changes for this release v1.5</i>
+            </ul>
+            
+        </div>
+                   
+        <div>   
+            <h5>Commands Run</h5>
+            Vipuls-MacBook-Air:sms_dev vipulgupta$ scp master root@106.51.121.251:/var/www/html/sms/
+root@106.51.121.251's password: 
+master                                                             100% 1870     1.8KB/s   00:00    
+Vipuls-MacBook-Air:sms_dev vipulgupta$ scp payroll root@106.51.121.251:/var/www/html/sms/
+root@106.51.121.251's password: 
+payroll                                                            100% 3730     3.6KB/s   00:00    
+Vipuls-MacBook-Air:sms_dev vipulgupta$ scp lib/events.php root@106.51.121.251:/var/www/html/sms/lib/
+root@106.51.121.251's password: 
+events.php                                                         100% 2170     2.1KB/s   00:00    
+Vipuls-MacBook-Air:sms_dev vipulgupta$ scp home.php root@106.51.121.251:/var/www/html/sms/
+root@106.51.121.251's password: 
+home.php                                                           100% 3231     3.2KB/s   00:00    
+Vipuls-MacBook-Air:sms_dev vipulgupta$ scp lib/insert.php root@106.51.121.251:/var/www/html/sms/lib/
+root@106.51.121.251's password: 
+insert.php                                                         100% 1391     1.4KB/s   00:00    
+Vipuls-MacBook-Air:sms_dev vipulgupta$ scp lib/utils.php root@106.51.121.251:/var/www/html/sms/lib/
+Vipuls-MacBook-Air:sms_dev vipulgupta$ scp changelog.html root@106.51.121.251:/var/www/html/sms/
+$scp ./emp_sal_slip.php root@106.51.121.251:/var/www/html/sms/
+$
+        </div>
+            <div>
+            <h5>Config Changes</h5> 
+            <ul>
+                <li>field</li><i>add new field. TableID:Loaded_payroll, field name:bonus, 
+                    field alias:Bonus, Field Type : text, Database Type : int, Field size :10</i>
+                <li>field_option</li><i>add disable option.
+                    OptionID	TableID	FieldId	Value	Alias 45 7 312
+0</i>
+            </ul>
+            
+        </div>
+            <div>
+            <h5>Data Changes</h5> 
+            <ul>
+                <li>events</li><i>update the codes. 
+                    Disable keypress option for payroll and master at row 5,8</i>
+            </ul>
+            
+        </div>
+        </div> 
+        
+          
+    </body>
+</html>

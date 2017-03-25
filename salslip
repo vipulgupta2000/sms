@@ -1,0 +1,157 @@
+<script>
+/* Code Modified for v3 */
+function goToURL(){
+document.forms["frm1"].action="emp_sal_slip.php";
+document.forms["frm1"].submit();
+}
+
+function goToURL_ad(){
+document.forms["frm1"].action="emp_sal_slip.php";
+document.forms["frm1"].submit(); 
+}
+/* Code Modified for v3 */
+
+</script>
+<div class="row">
+<div class="col-md-2"></div>
+<div class="col-md-10">
+    <select id="month" name="month">
+		<option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>		
+    </select> 
+	<select id="year" name="year">
+		<option value="2017">2017</option>
+		<option value="2016">2016</option>
+		<option value="2015">2015</option>
+		<option value="2014">2014</option>
+</select> 
+
+<?php
+$q = "select empid from users";
+$sql_empid = mysql_query($q);
+
+if($_SESSION['SESS_perm']=='admin' || $_SESSION['SESS_perm']=='sys_admin'){
+echo "<select id='empid' name='emp'>";
+while($row_empid = mysql_fetch_array($sql_empid)){
+echo "<option id=\"empid\" value = ".$row_empid['empid'].">".$row_empid['empid']."</option>";
+}
+echo "</select> ";
+echo "<input class=\"btn btn-warning\" id=\"btn\" type=\"hidden\" name=\"report\" value=\"report\">";
+echo "&nbsp";
+echo "<input class=\"btn btn-warning\" id=\"btn\" type=\"button\" name=\"print_sal_ad\" value=\"Print\" onclick=\"goToURL_ad()\">";
+
+}
+else{
+echo "<input class=\"btn btn-warning\" id=\"btn\" type=\"hidden\" name=\"report\" value=\"report\">";
+echo "&nbsp";
+echo "<input class=\"btn btn-warning\" id=\"btn\" type=\"button\" name=\"print_sal\" value=\"Print\" onclick=\"goToURL()\">";
+}
+
+
+if(empty($_POST['emp'])){
+$empid=isset($_POST['empid'])?$_POST['empid']:$_SESSION['SESS_empid'];
+}
+else{
+$empid=isset($_POST['empid'])?$_POST['empid']:$_POST['emp'];
+}
+	
+//echo "current id is".$empid;
+
+
+
+//Get Master table details
+
+$sql_master = "select * from master where empid=$empid";
+$resultm = mysql_query($sql_master) or die(mysql_error());
+$memp = array();
+$mfields = array();
+$sql_fields = "select name,alias from field where tblid=(select tblid from config where name='master')";
+$resultf = mysql_query($sql_fields) or die(mysql_error());
+while($rowm = mysql_fetch_array($resultm)){
+$resultf = mysql_query($sql_fields) or die(mysql_error());
+while($rowf=mysql_fetch_array($resultf)){
+$mfields[$rowf['name']] = $rowm[$rowf['name']];
+}
+$memp[$empid] = $mfields;
+$memp[$rowm['empid']] = $mfields;
+}
+
+
+error_reporting(0);
+$name=$memp[$empid]['name'];
+$emp=$memp[$empid]['emptype'];
+$doj=getmydate($memp[$empid]['doj']);
+$pf=$memp[$empid]['pf_accno'];
+$pan=$memp[$empid]['pan'];
+$mbasic=$memp[$empid]['basic'];
+$mhra=$memp[$empid]['hra'];
+$mspecial_allowance=$memp[$empid]['special_allowance'];
+$mconv=$memp[$empid]['conveyance'];
+$mchild=$memp[$empid]['child_education'];
+
+
+//Get payroll table details
+if(isset($_POST['report'])) {
+
+$sql="select * from payroll where year='$_POST[year]' and month='$_POST[month]' and empid='$empid'";
+//echo $sql;
+
+$result=mysql_query($sql) or die(mysql_error());
+
+$num = mysql_num_rows($result);
+if ($num <= 0) { 
+ echo "<h3><center>Sorry, Salary slip is not Generated Yet.....!!!</center></h3>";
+}
+ 
+ else{
+
+while($row=mysql_fetch_array($result)){
+$days = $row['days'];
+$emp_days_quater = $row['days_quarter'];
+$basic=round($row['basic']);
+$hra=$row['hra'];
+$special_allowance=$row['special_allowance'];
+$mgross=$row['monthly_gross'];
+$ded=$row['monthly_deduction'];
+$netsal=$row['net_salary'];
+$conv=$row['conveyance'];
+$child=$row['child_education'];
+$mon=$row['month'];
+$itax=$row['incometax_month'];
+$pfded=$row['pf'];
+$esi=$row['esi'];
+$lwf=$row['lwf'];
+$ptax=$row['professional_tax'];
+$aded=$row['arrear_deduction'];
+$plib=$row['performance_linked_incentives'];
+$lap=$row['laptop_allowance'];
+$oca=$row['on_call_allowance'];
+$nsa=$row['night_shift'];
+$arr_inc=$row['arrear_income'];
+$yproj=$row['projected_income'];
+$med=$row['medical_reimbursement'];
+$taxable_inc=$row['taxable_income'];
+$ntax=$row['projected_incometax'];
+$hra_ex=$row['hra_exemption'];
+$conv_ex=$row['conv_exemption'];
+$ann_80c=$row['annual80c_savings'];
+$ann_80d=$row['annual80d_savings'];
+
+include('slipformat.php');
+	
+}
+}
+}
+
+?>
+</div></div>

@@ -1,0 +1,99 @@
+<?php 
+if($_SESSION['SESS_perm']=='admin' || $_SESSION['SESS_perm']=='sys_admin'){}
+else{header("location:accessdenied.php");}
+?>
+<div id="middle_right_top">
+<h2>Payroll</h2>
+</div>
+
+<div class="col-md-10">
+<?php
+$tbl=$_GET['page'];
+$qual_orig=" 1=1";
+$qual=isset($_POST['qual'])?$_POST['qual']:$qual_orig;
+echo "Qual:<input type=\"text\" id=\"qual\" name=\"qual\" value=\"$qual\" />";
+echo "<br />";
+
+$sel=isset($_POST['sel'])?$_POST['sel']:" 1=1";
+$act=isset($_POST['act'])?$_POST['act']:'display';
+$prev=isset($_POST['prev'])?$_POST['prev']:'';
+echo "sel<input type=\"text\" name=\"sel\" value=\"$sel\" />";
+echo "action<input type=\"text\" name=\"act\" value=\"$act\" />";
+echo "prev<input type=\"text\" name=\"prev\" value=\"$prev\" />";
+//$tbl='appraisal_master';
+$field_edit=array('status');
+$field_edit1=array('empid','name','days','month','laptop_allowance','medical_reimbursement','arrear_income','on_call_allowance','status');
+//$field_show=array('id','empid','name','days','month','year','laptop_allowance','medical_reimbursement','arrear_income','on_call_allowance');
+$field_display=array('id','empid','name','days','month','year','monthly_gross','net_salary','status');
+$field_show=array();
+$field_show1 =array('id','empid','name','days','month','year','monthly_gross','net_salary','status');
+
+if ($act=='click' ) {	
+	echo input_new($tbl,$sel,$field_edit1,$field_show,3);   
+}
+elseif (isset($_POST['update'])) {  
+     echo display($tbl,$qual,1,$field_show);
+}
+elseif (isset($_POST['modify'])) {  
+     echo input($tbl,$qual,$field_edit,$field_show1);
+}
+elseif(isset($_POST['bk']))
+{  }
+elseif(isset($_POST['New'])){
+addrow1($tbl,$field_edit,$field_show,3);}
+else{
+echo display($tbl,$qual,1,$field_display);}
+
+if(isset($_POST['close_payroll'])){
+	
+	update($tbl);
+echo "<script>window.location.href='home.php?page=payroll';</script>";
+}
+
+if(isset($_POST['cancel_payroll'])){
+	
+	$cnt=$_POST['icnt'];
+	$i=0;
+while($i<$cnt)
+{
+if(isset($_POST['chb'.$i]))
+{	
+$val=$_POST['id'.$i];
+$quali =  "id = ".$val;
+
+$sql_f = mysql_query("select month,year,empid,name,monthly_gross,pf,incometax_month,lwf,professional_tax,net_salary,arrear_deduction from payroll where ".$quali);
+while($r = mysql_fetch_array($sql_f)){
+	$mon = $r['month'];
+	$yr = $r['year'];
+	$epid = $r['empid'];
+	$empname = $r['name'];
+	$mgross = $r['monthly_gross'];
+	$pf = $r['pf'];
+	$income = $r['incometax_month'];
+	$nsal = $r['net_salary'];
+	$arr_ded = $r['arrear_deduction'];
+	$lwf = $r['lwf'];
+	$ptax = $r['professional_tax'];
+}
+mysql_query("update loaded_payroll set status = 'Loaded' where empid = ".$epid." and month = ".$mon." and year = ".$yr);
+$curr = date('U');
+mysql_query("insert into accounts (date,entry_from,name,dr,cr,month,year) values ('$curr','Payroll','$empname','-$mgross',0,'$mon','$yr')");
+mysql_query("insert into accounts (date,entry_from,name,dr,cr,month,year) values ('$curr','PF','$empname',0,'-$pf','$mon','$yr')");
+mysql_query("insert into accounts (date,entry_from,name,dr,cr,month,year) values ('$curr','TDS','$empname',0,'-$income','$mon','$yr')");
+if($lwf != 0){
+mysql_query("insert into accounts (date,entry_from,name,dr,cr,month,year) values ('$curr','Labour Welfare Fund','$empname',0,'-$lwf','$mon','$yr')");}
+if($ptax != 0){
+mysql_query("insert into accounts (date,entry_from,name,dr,cr,month,year) values ('$curr','Professional Tax','$empname',0,'-$ptax','$mon','$yr')");}
+
+mysql_query("insert into accounts (date,entry_from,name,dr,cr,month,year) values ('$curr','Net Salary','$empname',0,'-$nsal','$mon','$yr')");
+mysql_query("insert into accounts (date,entry_from,name,dr,cr,month,year) values ('$curr','Arr. Deduction','$empname',0,'-$arr_ded','$mon','$yr')");
+mysql_query("DELETE FROM `payroll` WHERE ".$quali);
+}
+$i++;
+}
+echo "<script>window.location.href='home.php?page=payroll';</script>";
+}
+
+
+?>
+</div>

@@ -1,0 +1,77 @@
+<script>
+/* Code Modified for v3 */
+function goToURL_ad(){
+document.forms["frm1"].action="get_ytd.php";
+document.forms["frm1"].submit();
+}
+
+function goToURL(){
+document.forms["frm1"].action="get_ytd.php";
+document.forms["frm1"].submit();
+}
+/* Code Modified for v3 */
+</script>
+
+<div class="row">
+<div class="col-md-2"></div>
+<div class="col-md-10">
+	<select id="year" name="year">
+		<option value="2016">2016</option>
+		<option value="2015">2015</option>
+		<option value="2014">2014</option>
+		<option value="2013">2013</option>
+		<option value="2012">2012</option> 
+		<option value="2011">2011</option>
+</select> 
+
+<?php
+$q = "select empid from users";
+$sql_empid = mysql_query($q);
+
+if($_SESSION['SESS_perm']=='admin'  || $_SESSION['SESS_perm']=='sys_admin'){
+echo "<select id='empid' name='emp'>";
+while($row_empid = mysql_fetch_array($sql_empid)){
+echo "<option id=\"empid\" value = ".$row_empid['empid'].">".$row_empid['empid']."</option>";
+}
+echo "</select> ";
+echo "<input class=\"btn btn-warning\" id=\"btn\" type=\"hidden\" name=\"report\" value=\"report\">";
+echo "&nbsp";
+echo "<input class=\"btn btn-warning\" id=\"btn\" type=\"button\" name=\"print_sal_ad\" value=\"Print\" onclick=\"goToURL_ad()\">";
+
+}
+else{
+echo "<input class=\"btn btn-warning\" id=\"btn\" type=\"hidden\" name=\"report\" value=\"report\">";
+echo "&nbsp";
+echo "<input class=\"btn btn-warning\" id=\"btn\" type=\"button\" name=\"print_sal\" value=\"Print\" onclick=\"goToURL()\">";
+}
+if(empty($_POST['emp'])){
+$empid=isset($_POST['empid'])?$_POST['empid']:$_SESSION['SESS_empid'];
+}
+else{
+$empid=isset($_POST['empid'])?$_POST['empid']:$_POST['emp'];
+}
+if(isset($_POST['report'])){
+for($i=0;$i<12;$i++){
+$emp_mgross[$i] = 0;
+$emp_netsal[$i] = 0;
+$emp_pfded[$i] = 0;
+$emp_hra[$i] = 0;
+$emp_itax[$i] = 0;
+}
+
+$sql_payroll = "select monthly_gross,net_salary,pf,hra,incometax_month,month from payroll where empid=".$empid." and year = ".$_POST['year']." order by month";
+$query_payroll = mysql_query($sql_payroll);
+
+while($row = mysql_fetch_array($query_payroll)){
+	$temp = $row['month'];
+	$emp_mgross[$temp-1] = $row['monthly_gross'];
+	$emp_netsal[$temp-1] = $row['net_salary'];
+	$emp_pfded[$temp-1] = $row['pf'];
+	$emp_hra[$temp-1] = $row['hra'];
+	$emp_itax[$temp-1] = $row['incometax_month'];
+	$temp = 0;
+}
+include('ytd_slip_format.php');
+}
+?>
+</div></div>

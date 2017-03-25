@@ -1,0 +1,21 @@
+<div id="middle_right_top">
+<h2>Appraisal Rating</h2>
+</div>
+<div padding=10>
+<?php
+$tbl="user_rating";
+$qual=" mgrid='$_SESSION[SESS_empid]'";
+$field_edit=array('rating','comments');
+$field_show=array();
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{
+echo display($tbl,$qual,1,$field_show); 
+//display($tbl); 
+addrow($tbl);
+}
+
+?>
+</div>

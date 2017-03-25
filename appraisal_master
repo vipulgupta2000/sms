@@ -1,0 +1,19 @@
+<div id="middle_right_top">
+<h2>Enter Master Appraisal</h2>
+</div>
+<?php
+$tbl=$_GET['page'];
+$field_edit=array('ap_from','ap_todate','ap_status','ap_type');
+$field_show=array();
+$qual=NULL;
+if(isset($_POST['modify']) || isset($_POST['update']))
+{
+echo input($tbl,$qual,$field_edit,$field_show);
+}else
+{$qual=NULL;
+echo display('appraisal_master',$qual,1,$field_show);
+addrow($tbl);
+}
+
+echo "ok";
+?>

@@ -1,0 +1,211 @@
+<?php 
+if($_SESSION['SESS_perm']=='admin' || $_SESSION['SESS_perm']=='sys_admin'){
+?>
+<script src="js/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/popcss.css"> 
+<script type="text/javascript">
+$(document).ready(function() { 
+var id = '#dialog';
+ 
+//Get the screen height and width
+var maskHeight = $(document).height();
+var maskWidth = $(window).width();
+ 
+//Set heigth and width to mask to fill up the whole screen
+$('#mask').css({'width':maskWidth,'height':maskHeight});
+
+//transition effect
+$('#mask').fadeIn(500); 
+$('#mask').fadeTo("slow",0.9); 
+ 
+//Get the window height and width
+var winH = $(window).height();
+var winW = $(window).width();
+              
+//Set the popup window to center
+$(id).css('top',  winH/2-$(id).height()/2);
+$(id).css('left', winW/2-$(id).width()/2);
+ 
+//transition effect
+$(id).fadeIn(1000);  
+ 
+//if close button is clicked
+$('.window .close').click(function (e) {
+//Cancel the link behavior
+e.preventDefault();
+
+$('#mask').hide();
+$('.window').hide();
+});
+
+//if mask is clicked
+$('#mask').click(function () {
+$(this).hide();
+$('.window').hide();
+});
+ 
+});
+</script>
+<?php
+/*
+$month=isset($_POST['month'])?$_POST['month']:4;
+ ?>
+Month:<select name="month" id="month">		
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+		<option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+    </select>
+Year:<select name="year">
+		<option value="0">--Select--</option>
+		<option value="2016">2016</option>
+		<option value="2015">2015</option>
+		<option value="2014">2014</option>
+		<option value="2013">2013</option>
+		<option value="2012">2012</option> 
+		<option value="2011">2011</option>
+	</select> 
+<?php */
+error_reporting(0);
+$tbl=$_GET['page'];
+$sql_qual_query_m = mysql_query("select month from paystate where status='Open'");
+$sql_qual_query_y = mysql_query("select year from paystate where status='Open'");
+$sql_qual_result_m = mysql_result($sql_qual_query_m,0);
+$sql_qual_result_y = mysql_result($sql_qual_query_y,0);
+$month_my = $sql_qual_result_m;
+$year_my = $sql_qual_result_y;
+$sql_status = mysql_query("select status from loaded_payroll where month = ".$month_my." and year = ".$year_my);
+while($status_r = mysql_fetch_array($sql_status)){
+	if($status_r['status'] == 'Loaded'){
+		$array_loaded[] = $status_r['status'];		
+		}
+	elseif($status_r['status'] == 'Validated'){
+		$array_valid[] = $status_r['status'];		
+		}
+	else{$array_promote[] = $status_r['status'];}
+}
+$count_load = count($array_loaded);
+$count_valid = count($array_valid);
+$count_pro = count($array_promote);
+if($count_load == 0 ){$field_show=array();$field_edit=array();}
+else{
+$field_edit=array('days','lwf','laptop_allowance','medical_reimbursement','arrear_income','arrear_deduction','on_call_allowance','night_shift','project_allowance');
+$field_show=array();}
+
+
+$my_qual = "month = ".$month_my." and year = ".$year_my." and (status ='Loaded' or status = 'Validated')" ;
+//echo $my_qual;
+ 
+if(isset($_POST['validate']))
+{
+update($tbl);
+echo "<script>window.location.href='home.php?page=loaded_payroll';</script>";
+}
+
+if(isset($_POST['calc_arr'])){
+$cnt=$_POST['icnt'];
+$i=0;
+	while($i<$cnt){
+		if(isset($_POST['chb'.$i])){
+			cal_arrear($_POST['empid'.$i]);
+		}
+		$i++;
+	}
+}
+
+if(isset($_POST['open']))
+{
+$field_edit=array();
+$field_show=array();
+//echo display($tbl,$my_qual,1,$field_show); 
+$mdays=cal_days_in_month(CAL_GREGORIAN, $month_my, $year_my);
+echo $mdays."<br>";
+openpayroll($month_my,$year_my);
+echo "<script>window.location.href='home.php?page=loaded_payroll';</script>";
+}
+
+if(isset($_POST['see_promoted']))
+{
+	$sql_pro = mysql_query("select * from loaded_payroll where month = ".$month_my." and year = ".$year_my." and status = 'Promoted'");
+	$monthName = date("F", mktime(0, 0, 0, $month_my, 10));
+
+echo "<div id='boxes'>
+  <div id='dialog' class='window' style='overflow: auto;  ' >";
+  echo "<br><h3>All Promoted Payroll for ".$monthName." and Year ".$year_my."</h3><br>";
+echo "<table style='border:3px solid black;border-collapse: collapse;' >
+<tr style='border:5px;width:100px;padding:100px;'>
+
+<th class='heade'>EmpID</th>
+<th class='heade'>Name</th>
+<th class='heade'>Days</th>
+<th class='heade'>Month</th>
+<th class='heade'>Year</th>
+<th class='heade'>LWF</th>
+<th class='heade'>Laptop Allowance</th>
+<th class='heade'>Med Reimbursement</th>
+<th class='heade'>Arrear Income</th>
+<th class='heade'>On Call Allowance</th>
+<th class='heade'>Arrear Deduction</th>
+<th class='heade'>Night Shift</th>
+
+</tr>";
+
+  while($row = mysql_fetch_array($sql_pro))
+  {
+echo "<tr>";
+echo "<td class='data'>" .$row['empid']						. "</td>"  ;
+echo "<td class='data'>" .$row['name']						. "</td>"  ;
+echo "<td class='data'>" .$row['days']						. "</td>"  ;
+echo "<td class='data'>" .$row['month']						. "</td>"  ;
+echo "<td class='data'>" .$row['year']						. "</td>"  ;
+echo "<td class='data'>" .$row['lwf']						. "</td>"  ;
+echo "<td class='data'>" .$row['laptop_allowance']			. "</td>"  ;
+echo "<td class='data'>" .$row['medical_reimbursement']		. "</td>"  ;
+echo "<td class='data'>" .$row['arrear_income']				. "</td>"  ;
+echo "<td class='data'>" .$row['on_call_allowance']			. "</td>"  ;
+echo "<td class='data'>" .$row['arrear_deduction']			. "</td>"  ;
+echo "<td class='data'>" .$row['night_shift']				. "</td>"  ;
+echo "</tr>";
+  }
+echo "</table>";
+ echo "</div>
+ <div id='mask'></div>
+</div>";
+}
+/* if(isset($_POST['month']))
+{	
+$sdate="01-".$_POST['month']."-".$_POST['year'];
+$sdate=setmydate($sdate);
+$qual1="month = ".$_POST['month']." and year = ".$_POST['year'];
+echo $qual1;
+echo input($tbl,$qual1,$field_edit,$field_show);
+}
+else{}error_reporting(0); */
+
+echo input($tbl,$my_qual,$field_edit,$field_show); 
+
+ if($count_load >= 1){
+	 echo "<center><br><input class=\"btn-danger\"  name=\"validate\" type=\"submit\" value=\"Validate Payroll\">";
+	}
+ if($count_valid > 0 && $count_load == 0){
+	echo "<center><br><input class=\"btn-success\"  name=\"open\" type=\"submit\" value=\"Run Payroll\"> &nbsp;&nbsp;&nbsp;&nbsp;";
+	echo "<input class='btn-success'  type='submit' name='see_promoted' value='Show Promoted of the Month'>&nbsp;&nbsp;&nbsp;&nbsp;";
+	echo "<input class='btn-success'  type='submit' name='calc_arr' value='Calculate Arrears'></center>";
+	}
+ 
+ if($count_pro >= 1){}
+
+}
+else{echo "<h3><center>Sorry You don't have Admin Access</center></h3>";}
+?>
+
+
+
